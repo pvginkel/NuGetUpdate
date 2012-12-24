@@ -1,0 +1,147 @@
+﻿<#@ template language="C#" hostSpecific="true" debug="true" #>
+<#@ output extension=".cs" encoding="utf-8" #>
+<#@ assembly name="System.Xml" #>
+<#@ assembly name="System.Xml.Linq" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="$(SolutionDir)\NuGetUpdate.Installer\bin\$(ConfigurationName)\ngu.exe" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Collections" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Xml.Linq" #>
+<#@ import namespace="System.Xml.Serialization" #>
+<#@ import namespace="NuGetUpdate.Installer" #>
+<#@ import namespace="NuGetUpdate.Installer.ScriptEngine" #>
+<#
+
+var ignoredTypes = new HashSet<Type>(new[]
+{
+	typeof(ContainerType),
+	typeof(Script)
+});
+
+#>
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace NuGetUpdate.Installer.ScriptEngine
+{
+    abstract partial class ContainerType : IScriptAction
+    {
+        public abstract void Visit(IScriptVisitor visitor);
+    }
+<#
+	foreach (var type in typeof(ScriptRunner).Assembly.GetTypes().Where(p => p.Namespace == typeof(ScriptRunner).Namespace).OrderBy(p => p.Name))
+    {
+		if (ignoredTypes.Contains(type) || type.IsValueType)
+			continue;
+
+		if (typeof(ContainerType).IsAssignableFrom(type))
+        {
+		#>
+
+    partial class <#= type.Name #>
+	{
+        public override void Visit(IScriptVisitor visitor)
+        {
+            visitor.<#= type.Name #>(this);
+        }
+	}
+<#
+        }
+		else
+        {
+			var attributes = type.GetCustomAttributes(typeof(XmlTypeAttribute), true);
+
+			if (attributes.Length == 0)
+				continue;
+		#>
+
+    partial class <#= type.Name #> : IScriptAction
+	{
+        public void Visit(IScriptVisitor visitor)
+        {
+            visitor.<#= type.Name #>(this);
+        }
+	}
+<#
+        }
+    }
+#>
+
+    public interface IScriptVisitor
+    {
+<#
+	foreach (var type in typeof(ScriptRunner).Assembly.GetTypes().Where(p => p.Namespace == typeof(ScriptRunner).Namespace).OrderBy(p => p.Name))
+    {
+		if (ignoredTypes.Contains(type) || type.IsValueType)
+			continue;
+
+		var attributes = type.GetCustomAttributes(typeof(XmlTypeAttribute), true);
+
+		if (attributes.Length > 0 || typeof(ContainerType).IsAssignableFrom(type))
+        {
+			#>
+		void <#= type.Name #>(<#= type.Name #> action);
+<#
+		}
+	} #>
+    }
+
+	public abstract class AbstractScriptVisitor : IScriptVisitor
+	{
+<#
+	foreach (var type in typeof(ScriptRunner).Assembly.GetTypes().Where(p => p.Namespace == typeof(ScriptRunner).Namespace).OrderBy(p => p.Name))
+    {
+		if (ignoredTypes.Contains(type) || type.IsValueType)
+			continue;
+
+		if (type == typeof(If))
+        { #>
+        public virtual void If(If action)
+        {
+            VisitChildren(action.Then);
+
+            if (action.Else != null)
+                VisitChildren(action.Else);
+        }
+
+<#
+        }
+		else if (typeof(ContainerType).IsAssignableFrom(type))
+        { #>
+        public virtual void <#= type.Name #>(<#= type.Name #> action)
+        {
+            VisitChildren(action);
+        }
+
+<#
+        }
+		else
+        {
+			var attributes = type.GetCustomAttributes(typeof(XmlTypeAttribute), true);
+
+			if (attributes.Length == 0)
+				continue;
+		#>
+        public virtual void <#= type.Name #>(<#= type.Name #> action)
+        {
+        }
+
+<#
+        }
+    }
+#>
+        private void VisitChildren(ContainerType action)
+        {
+            if (action.Items == null)
+                return;
+
+            foreach (IScriptAction child in action.Items)
+            {
+                child.Visit(this);
+            }
+        }
+	}
+}

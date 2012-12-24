@@ -1,0 +1,349 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified"
+           elementFormDefault="qualified"
+           targetNamespace="https://github.com/pvginkel/NuGetUpdate/Script/v1"
+           xmlns:tns="https://github.com/pvginkel/NuGetUpdate/Script/v1"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  
+  <xs:element name="Script">
+    <xs:complexType>
+      <xs:sequence>
+
+        <xs:element name="Setup">
+          <xs:complexType>
+            <xs:complexContent>
+              <xs:extension base="tns:ContainerType" />
+            </xs:complexContent>
+          </xs:complexType>
+        </xs:element>
+
+        <xs:element name="Install">
+          <xs:complexType>
+            <xs:complexContent>
+              <xs:extension base="tns:ContainerType" />
+            </xs:complexContent>
+          </xs:complexType>
+        </xs:element>
+
+        <xs:element name="Update">
+          <xs:complexType>
+            <xs:complexContent>
+              <xs:extension base="tns:ContainerType" />
+            </xs:complexContent>
+          </xs:complexType>
+        </xs:element>
+
+        <xs:element name="Uninstall">
+          <xs:complexType>
+            <xs:complexContent>
+              <xs:extension base="tns:ContainerType" />
+            </xs:complexContent>
+          </xs:complexType>
+        </xs:element>
+
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:complexType name="ContainerType">
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="tns:Assign" />
+        <xs:element ref="tns:ExecShell" />
+        <xs:element ref="tns:ExecWait" />
+        <xs:element ref="tns:If" />
+        <xs:element ref="tns:Message" />
+        <xs:element ref="tns:MessageBox" />
+        <xs:element ref="tns:Control.CheckBox" />
+        <xs:element ref="tns:Control.Label" />
+        <xs:element ref="tns:Control.Link" />
+        <xs:element ref="tns:Page.Install.DestinationFolder" />
+        <xs:element ref="tns:Page.Install.Finish" />
+        <xs:element ref="tns:Page.Install.License" />
+        <xs:element ref="tns:Page.Install.Progress" />
+        <xs:element ref="tns:Page.Install.StartMenu" />
+        <xs:element ref="tns:Page.Install.Welcome" />
+        <xs:element ref="tns:Page.Update.Finish" />
+        <xs:element ref="tns:Page.Update.Progress" />
+        <xs:element ref="tns:Page.Update.Welcome" />
+        <xs:element ref="tns:Page.Uninstall.Finish" />
+        <xs:element ref="tns:Page.Uninstall.Progress" />
+        <xs:element ref="tns:Page.Uninstall.Welcome" />
+        <xs:element ref="tns:InstallPackage" />
+        <xs:element ref="tns:UninstallPackage" />
+        <xs:element ref="tns:CreateShortcut" />
+        <xs:element ref="tns:CreateDirectory" />
+        <xs:element ref="tns:Function" />
+        <xs:element ref="tns:Call" />
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:element name="Assign">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+          <xs:attribute name="Variable" type="xs:string" use="required" />
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="Message">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string" />
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="MessageBox">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+          <xs:attribute name="Text" type="xs:string" use="required" />
+          <xs:attribute name="Buttons" type="tns:MessageBoxButtons" use="optional" default="OK" />
+          <xs:attribute name="Icon" type="tns:MessageBoxIcon" use="optional" default="None" />
+          <xs:attribute name="Result" type="xs:string" use="optional" />
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="ExecShell">
+    <xs:complexType>
+      <xs:attribute name="Verb" type="xs:string" use="optional" />
+      <xs:attribute name="FileName" type="xs:string" use="required" />
+      <xs:attribute name="Arguments" type="xs:string" use="optional" />
+      <xs:attribute name="WindowStyle" type="tns:ProcessWindowStyle" use="optional" default="Normal" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="ExecWait">
+    <xs:complexType>
+      <xs:attribute name="FileName" type="xs:string" use="required" />
+      <xs:attribute name="Arguments" type="xs:string" use="optional" />
+      <xs:attribute name="WindowStyle" type="tns:ProcessWindowStyle" use="optional" default="Normal" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="If">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Then">
+          <xs:complexType>
+            <xs:complexContent>
+              <xs:extension base="tns:ContainerType" />
+            </xs:complexContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Else" minOccurs="0">
+          <xs:complexType>
+            <xs:complexContent>
+              <xs:extension base="tns:ContainerType" />
+            </xs:complexContent>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="Condition" type="xs:string" use="required" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="InstallPackage">
+    <xs:complexType>
+      <xs:attribute name="Overwrite" type="xs:boolean" use="optional" default="true" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="UninstallPackage">
+    <xs:complexType />
+  </xs:element>
+
+  <xs:element name="CreateShortcut">
+    <xs:complexType>
+      <xs:attribute name="ShortcutFileName" type="xs:string" use="required" />
+      <xs:attribute name="TargetFileName" type="xs:string" use="required" />
+      <xs:attribute name="IconFileName" type="xs:string" use="optional" />
+      <xs:attribute name="IconIndex" type="xs:string" use="optional" />
+      <xs:attribute name="StartOptions" type="xs:string" use="optional" />
+      <xs:attribute name="Description" type="xs:string" use="optional" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="CreateDirectory">
+    <xs:complexType>
+      <xs:attribute name="Path" type="xs:string" use="required" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="Page.Install.Welcome">
+    <xs:complexType>
+      <xs:attribute name="IsLast" type="xs:boolean" use="optional" default="false" />
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="Page.Install.License">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string" />
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="Page.Install.DestinationFolder">
+    <xs:complexType>
+      <xs:attribute name="Enabled" type="xs:boolean" use="optional" default="true" />
+      <xs:attribute name="IsLast" type="xs:boolean" use="optional" default="false" />
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="Page.Install.StartMenu">
+    <xs:complexType>
+      <xs:attribute name="Enabled" type="xs:boolean" use="optional" default="true" />
+      <xs:attribute name="CreateStartMenuVisible" type="xs:boolean" use="optional" default="true" />
+      <xs:attribute name="CreateOnDesktopVisible" type="xs:boolean" use="optional" default="false" />
+      <xs:attribute name="IsLast" type="xs:boolean" use="optional" default="false" />
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="Page.Install.Progress">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="tns:ContainerType">
+          <xs:attribute name="ProgressVisible" type="xs:boolean" use="optional" default="false" />
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="Page.Install.Finish">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="tns:ContainerType" />
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="Page.Update.Welcome">
+    <xs:complexType />
+  </xs:element>
+
+  <xs:element name="Page.Update.Progress">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="tns:ContainerType">
+          <xs:attribute name="ProgressVisible" type="xs:boolean" use="optional" default="false" />
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="Page.Update.Finish">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="tns:ContainerType" />
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="Page.Uninstall.Welcome">
+    <xs:complexType />
+  </xs:element>
+
+  <xs:element name="Page.Uninstall.Progress">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="tns:ContainerType">
+          <xs:attribute name="ProgressVisible" type="xs:boolean" use="optional" default="false" />
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="Page.Uninstall.Finish">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="tns:ContainerType" />
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="Control.Label">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string" />
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="Control.CheckBox">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="tns:ContainerType">
+          <xs:attribute name="Text" type="xs:string" use="required" />
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="Control.Link">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="tns:ContainerType">
+          <xs:attribute name="Text" type="xs:string" use="required" />
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="Function">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="tns:ContainerType">
+          <xs:attribute name="Name" type="xs:string" use="required" />
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="Call">
+    <xs:complexType>
+      <xs:attribute name="Name" type="xs:string" use="required" />
+    </xs:complexType>
+  </xs:element>
+
+  <xs:simpleType name="MessageBoxButtons">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="OK" />
+      <xs:enumeration value="OKCancel" />
+      <xs:enumeration value="AbortRetryIgnore" />
+      <xs:enumeration value="YesNoCancel" />
+      <xs:enumeration value="YesNo" />
+      <xs:enumeration value="RetryCancel" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="MessageBoxIcon">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="None" />
+      <xs:enumeration value="Hand" />
+      <xs:enumeration value="Question" />
+      <xs:enumeration value="Exclamation" />
+      <xs:enumeration value="Asterisk" />
+      <xs:enumeration value="Stop" />
+      <xs:enumeration value="Error" />
+      <xs:enumeration value="Warning" />
+      <xs:enumeration value="Information" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="ProcessWindowStyle">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Normal" />
+      <xs:enumeration value="Hidden" />
+      <xs:enumeration value="Minimized" />
+      <xs:enumeration value="Maximized" />
+    </xs:restriction>
+  </xs:simpleType>
+
+</xs:schema>

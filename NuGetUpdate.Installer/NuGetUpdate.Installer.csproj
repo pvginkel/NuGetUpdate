@@ -1,0 +1,222 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{08AE98D9-733E-4DE7-A1EC-7849AD2C2A03}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NuGetUpdate.Installer</RootNamespace>
+    <AssemblyName>ngu</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>mainicon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\Support\Key.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Expressions">
+      <HintPath>..\packages\Expressions.0.1.2.0\lib\net20\Expressions.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Arguments.cs" />
+    <Compile Include="InstallLogging\InstallLog-v1.cs">
+      <DependentUpon>InstallLog-v1.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="InstallLogging\InstallLogAdditions.cs" />
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainForm.Visitor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Metadata.cs" />
+    <Compile Include="Pages\IControlHostPage.cs" />
+    <Compile Include="Pages\FinishPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Pages\FinishPage.Designer.cs">
+      <DependentUpon>FinishPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\DownloadUpdatePage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Pages\DownloadUpdatePage.Designer.cs">
+      <DependentUpon>DownloadUpdatePage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ProgressChangedEventHandler.cs" />
+    <Compile Include="Pages\InstallDestinationFolderPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Pages\InstallDestinationFolderPage.Designer.cs">
+      <DependentUpon>InstallDestinationFolderPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\InstallLicensePage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Pages\InstallLicensePage.Designer.cs">
+      <DependentUpon>InstallLicensePage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ProgressPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Pages\ProgressPage.Designer.cs">
+      <DependentUpon>ProgressPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\InstallStartMenuPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Pages\InstallStartMenuPage.Designer.cs">
+      <DependentUpon>InstallStartMenuPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\IWaitablePage.cs" />
+    <Compile Include="Pages\PageControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Pages\WelcomePage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Pages\WelcomePage.Designer.cs">
+      <DependentUpon>WelcomePage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PageUtil.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScriptEngine\IScriptAction.cs" />
+    <Compile Include="ScriptEngine\IScriptContinuation.cs" />
+    <Compile Include="ScriptEngine\Script-v1.cs">
+      <DependentUpon>Script-v1.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="ScriptEngine\ScriptAdditions.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ScriptAdditions.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ScriptEngine\ScriptConfig.cs" />
+    <Compile Include="ScriptEngine\ScriptContext.cs" />
+    <Compile Include="ScriptEngine\ScriptEnvironment.cs" />
+    <Compile Include="ScriptEngine\ScriptException.cs" />
+    <Compile Include="ScriptEngine\ScriptExceptionEventHandler.cs" />
+    <Compile Include="ScriptEngine\ScriptLoader.cs" />
+    <Compile Include="ScriptEngine\ScriptRunner.cs" />
+    <Compile Include="ScriptEngine\ScriptRunnerMode.cs" />
+    <Compile Include="ScriptEngine\ScriptRunnerVisitor.cs" />
+    <Compile Include="ScriptEngine\TemplateExpression.cs" />
+    <Compile Include="ScriptEngine\TemplateParser.cs" />
+    <Compile Include="ScriptEngine\ScriptValidator.cs" />
+    <Compile Include="ScriptEngine\ScriptValidatorMode.cs" />
+    <Compile Include="ScriptEngine\VariableCollection.cs" />
+    <Compile Include="TextUtil.cs" />
+    <Compile Include="UILabels.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UILabels.resx</DependentUpon>
+    </Compile>
+    <Compile Include="UninstallManager.cs" />
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\InstallDestinationFolderPage.resx">
+      <DependentUpon>InstallDestinationFolderPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\FinishPage.resx">
+      <DependentUpon>FinishPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\InstallLicensePage.resx">
+      <DependentUpon>InstallLicensePage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\ProgressPage.resx">
+      <DependentUpon>ProgressPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\InstallStartMenuPage.resx">
+      <DependentUpon>InstallStartMenuPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\WelcomePage.resx">
+      <DependentUpon>WelcomePage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\DownloadUpdatePage.resx">
+      <DependentUpon>DownloadUpdatePage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UILabels.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>UILabels.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="..\Support\Key.snk">
+      <Link>Key.snk</Link>
+    </None>
+    <None Include="InstallLogging\Generate.bat" />
+    <None Include="InstallLogging\InstallLog-v1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+    <None Include="ScriptEngine\Generate.bat" />
+    <EmbeddedResource Include="ScriptEngine\Script-v1.xsd">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <None Include="ScriptEngine\ScriptAdditions.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ScriptAdditions.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="mainicon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NuGetUpdate.Shared\NuGetUpdate.Shared.csproj">
+      <Project>{a4f5ce3a-9da5-4201-b385-1db504aaf3f2}</Project>
+      <Name>NuGetUpdate.Shared</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>$(SolutionDir)\Libraries\InsertIcons\InsertIcons.exe $(TargetPath) $(ProjectDir)uninstall.ico $(SolutionDir)\Support\Key.snk</PostBuildEvent>
+  </PropertyGroup>
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

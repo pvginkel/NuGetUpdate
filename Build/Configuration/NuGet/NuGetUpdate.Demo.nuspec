@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>NuGetUpdate.Demo</id>
+    <version>$version$</version>
+    <authors>Pieter van Ginkel</authors>
+    <description>NuGet Update demonstration distributable.</description>
+    <projectUrl>http://github.com/pvginkel/NuGetUpdate</projectUrl>
+  </metadata>
+  <files>
+    <file src="Distrib\NuGet Update\ngu.exe" target="Tools" />
+    <file src="..\NuGetUpdate.Demo\bin\Release\**" target="Tools" exclude="..\NuGetUpdate.Demo\bin\Release\*.vshost.*;..\NuGetUpdate.Demo\bin\Release\*.pdb" />
+  </files>
+</package>

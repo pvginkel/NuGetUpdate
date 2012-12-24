@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>NuGetUpdate</id>
+    <version>$version$</version>
+    <authors>Pieter van Ginkel</authors>
+    <description>Installation system with NuGet as distribution mechanism.</description>
+    <projectUrl>http://github.com/pvginkel/NuGetUpdate</projectUrl>
+  </metadata>
+  <files>
+    <file src="..\NuGetUpdate\bin\Release\NuGetUpdate.dll" target="Lib\Net20" />
+    <file src="Distrib\NuGet Bootstrapper\ngubs.exe" target="Tools\Bootstrapper" />
+    <file src="..\Support\Make SFX archive\*" target="Tools\Bootstrapper" exclude="..\Support\Make SFX archive\.gitignore;..\Support\Make SFX archive\*.exe" />
+    <file src="Distrib\NuGet Update\ngu.exe" target="Tools\Installer" />
+  </files>
+</package>

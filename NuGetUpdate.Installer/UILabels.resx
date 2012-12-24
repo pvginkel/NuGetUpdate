@@ -1,0 +1,297 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ActionNotAllow" xml:space="preserve">
+    <value>Current context does not allow action {0}</value>
+  </data>
+  <data name="AreYouSureQuit" xml:space="preserve">
+    <value>Are you sure you want to quit {0}?</value>
+  </data>
+  <data name="ContinuationAlreadyRunning" xml:space="preserve">
+    <value>A continuation is already running</value>
+  </data>
+  <data name="ControlsNotAllowed" xml:space="preserve">
+    <value>Current context does not allow controls</value>
+  </data>
+  <data name="CopyingFile" xml:space="preserve">
+    <value>Copying {0}...</value>
+  </data>
+  <data name="CreatingDirectory" xml:space="preserve">
+    <value>Creating directory {0}...</value>
+  </data>
+  <data name="CreatingShortcut" xml:space="preserve">
+    <value>Creating shortcut {0}...</value>
+  </data>
+  <data name="DeletingDirectory" xml:space="preserve">
+    <value>Deleting directory {0}...</value>
+  </data>
+  <data name="DeletingFile" xml:space="preserve">
+    <value>Deleting {0}...</value>
+  </data>
+  <data name="DownloadFailure" xml:space="preserve">
+    <value>An unexpected error occured while downloading the setup:</value>
+  </data>
+  <data name="ExecutingProcess" xml:space="preserve">
+    <value>Executing {0}...</value>
+  </data>
+  <data name="FunctionNotFound" xml:space="preserve">
+    <value>Function {0} does not exist</value>
+  </data>
+  <data name="FunctionsCannotBeNested" xml:space="preserve">
+    <value>Functions cannot be nested</value>
+  </data>
+  <data name="InstallButtonLabel" xml:space="preserve">
+    <value>Install</value>
+  </data>
+  <data name="InstallComplete" xml:space="preserve">
+    <value>Completing the {0} Setup Wizard</value>
+  </data>
+  <data name="InstallCompleteSubText" xml:space="preserve">
+    <value>{0} has been installed on your computer.</value>
+  </data>
+  <data name="InstallContinue" xml:space="preserve">
+    <value>Click Install to start the installation.</value>
+  </data>
+  <data name="Installing" xml:space="preserve">
+    <value>Installing</value>
+  </data>
+  <data name="InstallingSubText" xml:space="preserve">
+    <value>Please wait while {0} is being installed.</value>
+  </data>
+  <data name="InstallWelcome" xml:space="preserve">
+    <value>Welcome to the {0} Setup Wizard</value>
+  </data>
+  <data name="InstallWelcomeSubText" xml:space="preserve">
+    <value>This wizard will guide you through the installation of {0}.</value>
+  </data>
+  <data name="InvalidPackage" xml:space="preserve">
+    <value>Downloaded package is invalid</value>
+  </data>
+  <data name="InvalidScript" xml:space="preserve">
+    <value>Script is invalid</value>
+  </data>
+  <data name="InvalidTargetPathRoot" xml:space="preserve">
+    <value>TargetPath root is invalid</value>
+  </data>
+  <data name="NextButtonLabel" xml:space="preserve">
+    <value>Next &gt;</value>
+  </data>
+  <data name="NextContinue" xml:space="preserve">
+    <value>Click Next to continue.</value>
+  </data>
+  <data name="NuGetSetup" xml:space="preserve">
+    <value>NuGet Setup</value>
+  </data>
+  <data name="PackageNotInstalled" xml:space="preserve">
+    <value>Package {0} is not installed on this computer</value>
+  </data>
+  <data name="PageNotControlHost" xml:space="preserve">
+    <value>Current page is not a control host</value>
+  </data>
+  <data name="PageNotWaitable" xml:space="preserve">
+    <value>Current page is not waitable</value>
+  </data>
+  <data name="PagesCannotBeNested" xml:space="preserve">
+    <value>Pages cannot be nested</value>
+  </data>
+  <data name="ProgressPageIsRequired" xml:space="preserve">
+    <value>Progress page is required</value>
+  </data>
+  <data name="RetryingDeleteFile" xml:space="preserve">
+    <value>Deleting {0} (retrying)...</value>
+  </data>
+  <data name="RetryingDeletingDirectory" xml:space="preserve">
+    <value>Deleting directory {0} (retrying)...</value>
+  </data>
+  <data name="ScriptVariableNotFound" xml:space="preserve">
+    <value>Script variable '{0}' was expected but not set</value>
+  </data>
+  <data name="SiteRequiredForInstall" xml:space="preserve">
+    <value>Site is required when installing</value>
+  </data>
+  <data name="SpecifyModeFlag" xml:space="preserve">
+    <value>Either -i, -u or -r must be specified.</value>
+  </data>
+  <data name="StartSetupFailure" xml:space="preserve">
+    <value>An unexpected error occured while re-starting the setup:</value>
+  </data>
+  <data name="TargetPathNotRooted" xml:space="preserve">
+    <value>TargetPath is not rooted</value>
+  </data>
+  <data name="TitleRequiredForInstall" xml:space="preserve">
+    <value>Title is required when installing</value>
+  </data>
+  <data name="UnexpectedFailure" xml:space="preserve">
+    <value>An unexpected failure occured:</value>
+  </data>
+  <data name="Uninstall" xml:space="preserve">
+    <value>Uninstall</value>
+  </data>
+  <data name="UninstallComplete" xml:space="preserve">
+    <value>Completing the {0} Uninstallation Wizard</value>
+  </data>
+  <data name="UninstallCompleteSubText" xml:space="preserve">
+    <value>{0} has been removed from your computer.</value>
+  </data>
+  <data name="Uninstalling" xml:space="preserve">
+    <value>Uninstalling</value>
+  </data>
+  <data name="UninstallingSubText" xml:space="preserve">
+    <value>Please wait while {0} is being uninstalled.</value>
+  </data>
+  <data name="UninstallWelcome" xml:space="preserve">
+    <value>Welcome to the {0} Uninstallation Wizard</value>
+  </data>
+  <data name="UninstallWelcomeSubText" xml:space="preserve">
+    <value>This wizard will guide you through the uninstallation of {0}.</value>
+  </data>
+  <data name="UpdateComplete" xml:space="preserve">
+    <value>Completing the {0} Update Wizard</value>
+  </data>
+  <data name="UpdateCompleteSubText" xml:space="preserve">
+    <value>{0} has been updated to its latest version.</value>
+  </data>
+  <data name="UpdateWelcome" xml:space="preserve">
+    <value>Welcome to the {0} Update Wizard</value>
+  </data>
+  <data name="UpdateWelcomeSubText" xml:space="preserve">
+    <value>This wizard will guide you through the update process of {0}.</value>
+  </data>
+  <data name="Updating" xml:space="preserve">
+    <value>Updating</value>
+  </data>
+  <data name="UpdatingSubText" xml:space="preserve">
+    <value>Please wait while {0} is being updated.</value>
+  </data>
+  <data name="XsdValidationFailed" xml:space="preserve">
+    <value>XSD validation failed for script</value>
+  </data>
+  <data name="CannotFindScript" xml:space="preserve">
+    <value>Cannot find script</value>
+  </data>
+  <data name="CannotRemoveBinFolder" xml:space="preserve">
+    <value>Unable to remove existing installation folder</value>
+  </data>
+  <data name="ShouldNotRestart" xml:space="preserve">
+    <value>Update should not be restarted</value>
+  </data>
+  <data name="ApplicationStillRunning" xml:space="preserve">
+    <value>{0} is still running. Close the application and retry.</value>
+  </data>
+</root>

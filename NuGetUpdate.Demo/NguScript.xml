@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Script xmlns="https://github.com/pvginkel/NuGetUpdate/Script/v1">
+  
+  <Setup>
+    
+    <!-- Setup variables required for the setup -->
+    <Assign Variable="TargetPath">ExpandPath("%LOCAL_APPDATA%\\NuGet Update Demo")</Assign>
+    <Assign Variable="StartMenuPath">"NuGet Update Demo"</Assign>
+    
+    <!-- Function shared between update and install to start the demo application -->
+    <Function Name="StartDemo">
+      <ExecShell
+        FileName="TargetPath + &quot;\\Bin\\NuGetUpdate.Demo.exe&quot;"
+        Arguments="Config.RestartArguments"/>
+    </Function>
+    
+  </Setup>
+  
+  <Install>
+    
+    <Page.Install.Welcome />
+    
+    <Page.Install.License>{{File.ReadAllText("Tools\\License.txt")}}</Page.Install.License>
+    
+    <Page.Install.DestinationFolder />
+    
+    <Page.Install.StartMenu CreateOnDesktopVisible="true" IsLast="true" />
+    
+    <Page.Install.Progress>
+      
+      <!-- Install the contents of the NuGet package into the target folder -->
+      <InstallPackage />
+
+      <!-- Create the requested shortcuts -->
+      <If Condition="CreateShortcuts">
+        <Then>
+          <CreateShortcut
+            ShortcutFileName="ExpandPath(&quot;%STARTMENU%\\&quot; + StartMenuPath + &quot;\\NuGet Update Demo.lnk&quot;)"
+            TargetFileName="TargetPath + &quot;\\Bin\\NuGetUpdate.Demo.exe&quot;" />
+        </Then>
+      </If>
+      <If Condition="CreateDesktopShortcuts">
+        <Then>
+          <CreateShortcut
+            ShortcutFileName="ExpandPath(&quot;%DESKTOP%\\NuGet Update Demo.lnk&quot;)"
+            TargetFileName="TargetPath + &quot;\\Bin\\NuGetUpdate.Demo.exe&quot;" />
+        </Then>
+      </If>
+      
+    </Page.Install.Progress>
+    
+    <Page.Install.Finish>
+      <Control.CheckBox Text="Run NuGet Update Demo">
+        <Call Name="StartDemo" />
+      </Control.CheckBox>
+    </Page.Install.Finish>
+    
+  </Install>
+  <Update>
+    
+    <Page.Update.Welcome />
+    
+    <Page.Update.Progress>
+
+      <!-- Install the contents of the NuGet package into the target folder -->
+      <InstallPackage />
+
+    </Page.Update.Progress>
+
+    <Page.Update.Finish>
+      <Control.CheckBox Text="Run NuGet Update Demo">
+        <Call Name="StartDemo" />
+      </Control.CheckBox>
+    </Page.Update.Finish>
+    
+  </Update>
+  <Uninstall>
+    
+    <Page.Uninstall.Welcome />
+    
+    <Page.Uninstall.Progress>
+    
+      <!-- Execute the un-installation log -->
+      <UninstallPackage />
+      
+    </Page.Uninstall.Progress>
+    
+    <Page.Uninstall.Finish />
+    
+  </Uninstall>
+  
+</Script>

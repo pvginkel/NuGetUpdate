@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified"
+           elementFormDefault="qualified"
+           targetNamespace="https://github.com/pvginkel/NuGetUpdate/InstallLog/v1"
+           xmlns:tns="https://github.com/pvginkel/NuGetUpdate/InstallLog/v1"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="InstallLog">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          
+          <xs:element name="CreateDirectory">
+            <xs:complexType>
+              <xs:complexContent>
+                <xs:extension base="tns:InstallLogEntry">
+                  <xs:attribute name="Path" type="xs:string" use="required" />
+                  <xs:attribute name="Force" type="xs:boolean" use="optional" default="false" />
+                </xs:extension>
+              </xs:complexContent>
+            </xs:complexType>
+          </xs:element>
+
+          <xs:element name="CreateFile">
+            <xs:complexType>
+              <xs:complexContent>
+                <xs:extension base="tns:InstallLogEntry">
+                  <xs:attribute name="Path" type="xs:string" use="required" />
+                </xs:extension>
+              </xs:complexContent>
+            </xs:complexType>
+          </xs:element>
+          
+        </xs:choice>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:complexType name="InstallLogEntry" />
+
+</xs:schema>
