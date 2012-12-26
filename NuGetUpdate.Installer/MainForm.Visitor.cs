@@ -455,6 +455,9 @@ namespace NuGetUpdate.Installer
 
                     try
                     {
+                        if (!Directory.Exists(targetPath))
+                            return null;
+
                         Directory.Move(targetPath, tempPath);
 
                         return tempPath;

@@ -48,9 +48,6 @@ namespace NuGetUpdate.Installer
 
         private void ProcessCreateDirectory(InstallLogCreateDirectory entry)
         {
-            if (!Directory.Exists(entry.Path))
-                return;
-
             for (int i = 0; i < RetryCount; i++)
             {
                 if (i == 0)
@@ -68,6 +65,9 @@ namespace NuGetUpdate.Installer
 
                 try
                 {
+                    if (!Directory.Exists(entry.Path))
+                        return;
+
                     if (entry.Force)
                     {
                         Directory.Delete(entry.Path, true);
