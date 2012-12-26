@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
@@ -7,9 +9,25 @@ namespace NuGetUpdate.Shared
 {
     public class PathLabel : Control
     {
-        public PathLabel()
+        private const TextFormatFlags FormatFlags = TextFormatFlags.NoPrefix | TextFormatFlags.PathEllipsis | TextFormatFlags.SingleLine;
+
+        private int _height;
+
+        [EditorBrowsable(EditorBrowsableState.Always)]
+        [DefaultValue(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        [Localizable(true)]
+        [Browsable(true)]
+        [RefreshProperties(RefreshProperties.All)]
+        public override bool AutoSize
         {
-            Height = CalculateHeight();
+            get { return base.AutoSize; }
+            set
+            {
+                base.AutoSize = value;
+
+                EnforceHeight();
+            }
         }
 
         private int CalculateHeight()
@@ -21,6 +39,8 @@ namespace NuGetUpdate.Shared
         {
             base.OnTextChanged(e);
 
+            PerformLayout();
+
             Invalidate();
         }
 
@@ -28,14 +48,41 @@ namespace NuGetUpdate.Shared
         {
             base.OnFontChanged(e);
 
-            Height = CalculateHeight();
+            EnforceHeight();
+        }
+
+        private void EnforceHeight()
+        {
+            if (!AutoSize)
+                return;
+
+            Height = _height = CalculateHeight();
+
+            PerformLayout();
+
+            Invalidate();
         }
 
         protected override void SetBoundsCore(int x, int y, int width, int height, BoundsSpecified specified)
         {
-            height = CalculateHeight();
+            if (AutoSize)
+                height = _height;
 
             base.SetBoundsCore(x, y, width, height, specified);
+        }
+
+        public override Size GetPreferredSize(Size proposedSize)
+        {
+            if (AutoSize)
+            {
+                var result = TextRenderer.MeasureText(Text, Font, proposedSize, FormatFlags);
+
+                return new Size(Math.Min(result.Width, proposedSize.Width), _height);
+            }
+            else
+            {
+                return base.GetPreferredSize(proposedSize);
+            }
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -47,7 +94,7 @@ namespace NuGetUpdate.Shared
                 ClientRectangle,
                 ForeColor,
                 BackColor,
-                TextFormatFlags.NoPrefix | TextFormatFlags.PathEllipsis | TextFormatFlags.SingleLine
+                FormatFlags
             );
         }
     }

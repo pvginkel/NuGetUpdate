@@ -114,6 +114,7 @@
             // 
             // _progressLabel
             // 
+            this._progressLabel.AutoSize = true;
             this._progressLabel.Dock = System.Windows.Forms.DockStyle.Fill;
             this._progressLabel.Location = new System.Drawing.Point(3, 3);
             this._progressLabel.Name = "_progressLabel";
@@ -123,7 +124,7 @@
             // _progressBar
             // 
             this._progressBar.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._progressBar.Location = new System.Drawing.Point(3, 22);
+            this._progressBar.Location = new System.Drawing.Point(3, 9);
             this._progressBar.Maximum = 1000;
             this._progressBar.Name = "_progressBar";
             this._progressBar.Size = new System.Drawing.Size(544, 18);
@@ -131,7 +132,7 @@
             // 
             // _showDetails
             // 
-            this._showDetails.Location = new System.Drawing.Point(3, 46);
+            this._showDetails.Location = new System.Drawing.Point(3, 33);
             this._showDetails.Name = "_showDetails";
             this._showDetails.Size = new System.Drawing.Size(98, 23);
             this._showDetails.TabIndex = 2;
@@ -144,9 +145,9 @@
             this._progressListBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this._progressListBox.FormattingEnabled = true;
             this._progressListBox.IntegralHeight = false;
-            this._progressListBox.Location = new System.Drawing.Point(3, 75);
+            this._progressListBox.Location = new System.Drawing.Point(3, 62);
             this._progressListBox.Name = "_progressListBox";
-            this._progressListBox.Size = new System.Drawing.Size(544, 254);
+            this._progressListBox.Size = new System.Drawing.Size(544, 267);
             this._progressListBox.TabIndex = 3;
             // 
             // ProgressPage
@@ -162,6 +163,7 @@
             this.formFlowFooter1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 

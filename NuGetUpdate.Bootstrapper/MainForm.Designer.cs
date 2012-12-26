@@ -113,6 +113,7 @@ namespace NuGetUpdate.Bootstrapper
             // 
             // _progressLabel
             // 
+            this._progressLabel.AutoSize = true;
             this._progressLabel.Location = new System.Drawing.Point(3, 27);
             this._progressLabel.Name = "_progressLabel";
             this._progressLabel.Size = new System.Drawing.Size(0, 13);
