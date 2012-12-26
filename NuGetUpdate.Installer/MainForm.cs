@@ -154,9 +154,10 @@ namespace NuGetUpdate.Installer
             // attempted version. This isn't set on Cancel, so the user can
             // still retry if he cancels.
 
-            using (var metadata = Metadata.Create(Program.Arguments.Package))
+            using (var metadata = Metadata.Open(Program.Arguments.Package, false, true))
             {
-                metadata.AttemptedVersion = _runner.Environment.Config.PackageVersion;
+                if (metadata != null)
+                    metadata.AttemptedVersion = _runner.Environment.Config.PackageVersion;
             }
 
             ShowException(e.Exception);

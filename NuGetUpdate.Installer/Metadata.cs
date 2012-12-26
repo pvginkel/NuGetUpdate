@@ -137,12 +137,23 @@ namespace NuGetUpdate.Installer
 
         public static Metadata Open(string packageCode, bool throwWhenMissing)
         {
+            return Open(packageCode, throwWhenMissing, false);
+        }
+
+        public static Metadata Open(string packageCode, bool throwWhenMissing, bool writable)
+        {
             if (packageCode == null)
                 throw new ArgumentNullException("packageCode");
 
             using (var baseKey = BaseKey)
             {
-                var key = baseKey.OpenSubKey(packageCode);
+                var key = baseKey.OpenSubKey(packageCode, writable);
+
+                if (key != null && !Validate(key))
+                {
+                    key.Close();
+                    key = null;
+                }
 
                 if (key == null)
                 {
@@ -154,6 +165,28 @@ namespace NuGetUpdate.Installer
 
                 return new Metadata(key, packageCode);
             }
+        }
+
+        private static bool Validate(RegistryKey key)
+        {
+            return VerifyNotNull(
+                key,
+                InstalledVersionKey,
+                NuGetSiteKey,
+                InstallPathKey,
+                SetupTitleKey
+            );
+        }
+
+        private static bool VerifyNotNull(RegistryKey key, params string[] keyNames)
+        {
+            foreach (string keyName in keyNames)
+            {
+                if (key.GetValue(keyName) == null)
+                    return false;
+            }
+
+            return true;
         }
 
         public static Metadata Create(string packageCode)

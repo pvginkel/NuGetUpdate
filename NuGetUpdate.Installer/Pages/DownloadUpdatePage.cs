@@ -130,9 +130,10 @@ namespace NuGetUpdate.Installer.Pages
 
             if (_downloader.PackageCode != null)
             {
-                using (var metadata = Metadata.Create(Program.Arguments.Package))
+                using (var metadata = Metadata.Open(Program.Arguments.Package, false, true))
                 {
-                    metadata.AttemptedVersion = _downloader.PackageCode;
+                    if (metadata != null)
+                        metadata.AttemptedVersion = _downloader.PackageCode;
                 }
             }
 
