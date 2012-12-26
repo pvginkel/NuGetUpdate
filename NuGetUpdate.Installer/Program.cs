@@ -96,7 +96,8 @@ namespace NuGetUpdate.Installer
                     Escaping.ShellEncode(Program.Arguments.Package),
                     Escaping.ShellEncode(Program.ExtraArguments)
                 ),
-                UseShellExecute = false
+                UseShellExecute = false,
+                WorkingDirectory = Path.GetTempPath()
             }))
             {
                 // We do not wait for the process to finish.

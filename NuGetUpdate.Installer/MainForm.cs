@@ -38,6 +38,8 @@ namespace NuGetUpdate.Installer
             InstallLogEntry[] installLogEntries = null;
             bool isInstalled;
 
+            string sourcePath = Environment.CurrentDirectory;
+            
             using (var metadata = Metadata.Open(Program.Arguments.Package, !Program.Arguments.Install))
             {
                 isInstalled = metadata != null;
@@ -53,7 +55,7 @@ namespace NuGetUpdate.Installer
                         installLogEntries = installLog.Items;
 
                     if (Program.Arguments.Uninstall)
-                        Environment.CurrentDirectory = metadata.InstallPath;
+                        sourcePath = metadata.InstallPath;
                 }
             }
 
@@ -75,11 +77,11 @@ namespace NuGetUpdate.Installer
 
             if (!Program.Arguments.Uninstall)
             {
-                Util.ValidateDownloadFolder(Environment.CurrentDirectory);
+                Util.ValidateDownloadFolder(sourcePath);
 
                 scriptFileName = Path.Combine(
                     Path.Combine(
-                        Environment.CurrentDirectory,
+                        sourcePath,
                         Constants.ToolsFolder
                     ),
                     Constants.ScriptFileName
@@ -89,7 +91,7 @@ namespace NuGetUpdate.Installer
             {
                 scriptFileName = Path.Combine(
                     Path.Combine(
-                        Environment.CurrentDirectory,
+                        sourcePath,
                         Constants.BinFolder
                     ),
                     Constants.ScriptFileName
@@ -126,7 +128,7 @@ namespace NuGetUpdate.Installer
             else
             {
                 config = ScriptLoader.LoadConfigFromNuspec(
-                    Environment.CurrentDirectory,
+                    sourcePath,
                     setupTitle,
                     installedVersion,
                     Escaping.ShellEncode(Program.ExtraArguments)

@@ -97,7 +97,8 @@ namespace NuGetUpdate
                         Escaping.ShellEncode(packageCode),
                         Escaping.ShellEncode(restartArguments)
                     ),
-                    UseShellExecute = false
+                    UseShellExecute = false,
+                    WorkingDirectory = metadata.InstallPath
                 }))
                 {
                 }

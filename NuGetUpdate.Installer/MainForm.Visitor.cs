@@ -67,11 +67,27 @@ namespace NuGetUpdate.Installer
                     FileName = fileName,
                     Arguments = arguments,
                     Verb = verb,
+                    WorkingDirectory = GetWorkingDirectory(),
                     WindowStyle = Enum<System.Diagnostics.ProcessWindowStyle>.Parse(action.WindowStyle.ToString())
                 }))
                 {
                     // We do not wait for this process.
                 }
+            }
+
+            private string GetWorkingDirectory()
+            {
+                string targetPath = Runner.Variables.GetOptional<string>(
+                    Constants.ScriptVariables.TargetPath
+                );
+
+                if (
+                    String.IsNullOrEmpty(targetPath) ||
+                    !Directory.Exists(targetPath)
+                )
+                    targetPath = Path.GetTempPath();
+
+                return targetPath;
             }
 
             public override void ExecWait(ExecWait action)
@@ -96,7 +112,8 @@ namespace NuGetUpdate.Installer
                 {
                     FileName = fileName,
                     Arguments = arguments,
-                    WindowStyle = Enum<System.Diagnostics.ProcessWindowStyle>.Parse(action.WindowStyle.ToString())
+                    WindowStyle = Enum<System.Diagnostics.ProcessWindowStyle>.Parse(action.WindowStyle.ToString()),
+                    WorkingDirectory = GetWorkingDirectory()
                 }))
                 {
                     process.WaitForExit();
