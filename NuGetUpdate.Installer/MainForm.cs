@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
+using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 using NuGetUpdate.Installer.InstallLogging;
@@ -28,6 +30,8 @@ namespace NuGetUpdate.Installer
         public MainForm()
         {
             InitializeComponent();
+
+            Icon = Icon.ExtractAssociatedIcon(Assembly.GetEntryAssembly().Location);
 
             Disposed += MainForm_Disposed;
 

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
+using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 using NuGetUpdate.Shared;
@@ -16,6 +18,7 @@ namespace NuGetUpdate.Bootstrapper
         {
             InitializeComponent();
 
+            Icon = Icon.ExtractAssociatedIcon(Assembly.GetEntryAssembly().Location);
             Text = String.Format(Text, Program.Arguments.Title);
 
             Disposed += MainForm_Disposed;
