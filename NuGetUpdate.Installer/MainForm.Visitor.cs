@@ -545,6 +545,9 @@ namespace NuGetUpdate.Installer
                     Arguments = String.Format("-r -p {0}", Escaping.ShellEncode(Runner.Environment.Config.PackageCode))
                 };
 
+                shellLink.SetPropertyValue(PropertyStoreProperty.AppUserModel_StartPinOption, 1 /* APPUSERMODEL_STARTPINOPTION_NOPINONINSTALL */);
+                shellLink.SetPropertyValue(PropertyStoreProperty.AppUserModel_ExcludeFromShowInNewInstall, true);
+
                 shellLink.Save(shortcutFileName);
             }
 

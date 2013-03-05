@@ -325,6 +325,8 @@ namespace NuGetUpdate.Shared
             private long longVal;
             [FieldOffset(8)]
             private short boolVal;
+            [FieldOffset(8)]
+            private uint ulVal;
 
             public VarEnum VarType
             {
@@ -333,12 +335,28 @@ namespace NuGetUpdate.Shared
             }
 
             [SecurityCritical]
-            public string GetValue()
+            public string GetString()
             {
                 if (vt == (ushort)VarEnum.VT_LPWSTR)
-                {
                     return Marshal.PtrToStringUni(pointerVal);
-                }
+
+                return null;
+            }
+
+            [SecurityCritical]
+            public bool? GetBool()
+            {
+                if (vt == (ushort)VarEnum.VT_BOOL)
+                    return boolVal != 0;
+
+                return null;
+            }
+
+            [SecurityCritical]
+            public uint? GetUInt32()
+            {
+                if (vt == (ushort)VarEnum.VT_UI4)
+                    return ulVal;
 
                 return null;
             }
@@ -349,6 +367,14 @@ namespace NuGetUpdate.Shared
                 Clear();
                 vt = (ushort)VarEnum.VT_BOOL;
                 boolVal = (short)(f ? -1 : 0);
+            }
+
+            [SecurityCritical]
+            public void SetValue(uint f)
+            {
+                Clear();
+                vt = (ushort)VarEnum.VT_UI4;
+                ulVal = f;
             }
 
             [SecurityCritical]
@@ -394,6 +420,8 @@ namespace NuGetUpdate.Shared
                 case PropertyStoreProperty.AppUserModel_RelaunchCommand: return NativeMethods.PKEY.AppUserModel_RelaunchCommand;
                 case PropertyStoreProperty.AppUserModel_RelaunchDisplayNameResource: return NativeMethods.PKEY.AppUserModel_RelaunchDisplayNameResource;
                 case PropertyStoreProperty.AppUserModel_RelaunchIconResource: return NativeMethods.PKEY.AppUserModel_RelaunchIconResource;
+                case PropertyStoreProperty.AppUserModel_StartPinOption: return NativeMethods.PKEY.AppUserModel_StartPinOption;
+                case PropertyStoreProperty.AppUserModel_ExcludeFromShowInNewInstall: return NativeMethods.PKEY.AppUserModel_ExcludeFromShowInNewInstall;
                 case PropertyStoreProperty.Title: return NativeMethods.PKEY.Title;
                 default: throw new ArgumentOutOfRangeException("property");
             }
@@ -425,6 +453,10 @@ namespace NuGetUpdate.Shared
             public static readonly PKEY AppUserModel_RelaunchDisplayNameResource = new PKEY(new Guid("9F4C2855-9F79-4B39-A8D0-E1D42DE1D5F3"), 4);
             /// <summary>PKEY_AppUserModel_RelaunchIconResource</summary>
             public static readonly PKEY AppUserModel_RelaunchIconResource = new PKEY(new Guid("9F4C2855-9F79-4B39-A8D0-E1D42DE1D5F3"), 3);
+            /// <summary>PKEY_AppUserModel_StartPinOption</summary>
+            public static readonly PKEY AppUserModel_StartPinOption = new PKEY(new Guid("9F4C2855-9F79-4B39-A8D0-E1D42DE1D5F3"), 12);
+            /// <summary>PKEY_AppUserModel_ExcludeFromShowInNewInstall</summary>
+            public static readonly PKEY AppUserModel_ExcludeFromShowInNewInstall = new PKEY(new Guid("9F4C2855-9F79-4B39-A8D0-E1D42DE1D5F3"), 8);
         }
 
         [Flags]

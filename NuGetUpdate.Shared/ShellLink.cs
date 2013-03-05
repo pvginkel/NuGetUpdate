@@ -221,7 +221,7 @@ namespace NuGetUpdate.Shared
             ShortcutFile = linkFile;
         }
 
-        public string GetPropertyValue(PropertyStoreProperty property)
+        public string GetPropertyStringValue(PropertyStoreProperty property)
         {
             if (_propertyStore == null)
                 return null;
@@ -230,11 +230,65 @@ namespace NuGetUpdate.Shared
             {
                 _propertyStore.GetValue(NativeMethods.GetPkey(property), propertyValue);
 
-                return propertyValue.GetValue();
+                return propertyValue.GetString();
             }
         }
 
         public void SetPropertyValue(PropertyStoreProperty property, string value)
+        {
+            if (_propertyStore != null)
+            {
+                using (var propertyValue = new NativeMethods.PROPVARIANT())
+                {
+                    propertyValue.SetValue(value);
+
+                    _propertyStore.SetValue(NativeMethods.GetPkey(property), propertyValue);
+                }
+            }
+        }
+
+        public bool? GetPropertyBoolValue(PropertyStoreProperty property)
+        {
+            if (_propertyStore == null)
+                return null;
+
+            using (var propertyValue = new NativeMethods.PROPVARIANT())
+            {
+                _propertyStore.GetValue(NativeMethods.GetPkey(property), propertyValue);
+
+                return propertyValue.GetBool();
+            }
+        }
+
+        public void SetPropertyValue(PropertyStoreProperty property, bool value)
+        {
+            if (_propertyStore != null)
+            {
+                using (var propertyValue = new NativeMethods.PROPVARIANT())
+                {
+                    propertyValue.SetValue(value);
+
+                    _propertyStore.SetValue(NativeMethods.GetPkey(property), propertyValue);
+                }
+            }
+        }
+
+        [CLSCompliant(false)]
+        public uint? GetPropertyUInt32Value(PropertyStoreProperty property)
+        {
+            if (_propertyStore == null)
+                return null;
+
+            using (var propertyValue = new NativeMethods.PROPVARIANT())
+            {
+                _propertyStore.GetValue(NativeMethods.GetPkey(property), propertyValue);
+
+                return propertyValue.GetUInt32();
+            }
+        }
+
+        [CLSCompliant(false)]
+        public void SetPropertyValue(PropertyStoreProperty property, uint value)
         {
             if (_propertyStore != null)
             {
@@ -255,6 +309,8 @@ namespace NuGetUpdate.Shared
         AppUserModel_IsDestListSeparator,
         AppUserModel_RelaunchCommand,
         AppUserModel_RelaunchDisplayNameResource,
-        AppUserModel_RelaunchIconResource
+        AppUserModel_RelaunchIconResource,
+        AppUserModel_StartPinOption,
+        AppUserModel_ExcludeFromShowInNewInstall
     }
 }
