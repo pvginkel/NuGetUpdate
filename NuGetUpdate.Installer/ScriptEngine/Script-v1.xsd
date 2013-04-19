@@ -152,6 +152,7 @@
   <xs:element name="InstallPackage">
     <xs:complexType>
       <xs:attribute name="Overwrite" type="xs:boolean" use="optional" default="true" />
+      <xs:attribute name="IntoRoot" type="xs:boolean" use="optional" default="false" />
     </xs:complexType>
   </xs:element>
 

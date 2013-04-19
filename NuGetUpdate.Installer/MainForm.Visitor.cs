@@ -368,7 +368,8 @@ namespace NuGetUpdate.Installer
                     Force = false
                 });
 
-                targetPath = Path.Combine(targetPath, Constants.BinFolder);
+                if (!action.IntoRoot)
+                    targetPath = Path.Combine(targetPath, Constants.BinFolder);
 
                 string tempPath = null;
 
