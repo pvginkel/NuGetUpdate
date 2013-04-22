@@ -85,6 +85,14 @@ namespace NuGetUpdate
                 );
 
                 if (!File.Exists(nguPath))
+                {
+                    nguPath = Path.Combine(
+                        metadata.InstallPath,
+                        Constants.NuGetUpdateFileName
+                    );
+                }
+
+                if (!File.Exists(nguPath))
                     throw new NuGetUpdateException(UILabels.NuGetUpdateNotFound);
 
                 AllowSetForegroundWindow(ASFW_ANY);
