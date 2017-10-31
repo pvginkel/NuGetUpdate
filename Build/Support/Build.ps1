@@ -332,11 +332,6 @@ Function Create-Bootstrapper
     
     $Arguments = "`"" + $Target + "\Setup.exe`" http://nuget.org/api/v2 NuGetUpdate.Demo `"NuGet Update Demo`""
     
-    Copy-Item `
-        ($Global:Distrib + "\NuGet Bootstrapper\ngubs.exe") `
-        ($Global:Root + "\Support\Make SFX archive") `
-        -Force
-
     Start-Process `
         -NoNewWindow `
         -Wait `
@@ -345,6 +340,21 @@ Function Create-Bootstrapper
         -WorkingDirectory ($Global:Root + "\Support\Make SFX archive") `
         -PassThru | Out-Null
         
+    Console-Update-Status "[OK]" -ForegroundColor Green
+}
+
+Function Compress-Bootstraper
+{
+    Write-Host "Compressing bootstrapper"
+    
+    Start-Process `
+        -NoNewWindow `
+        -Wait `
+        -FilePath ($Global:Root + "\Libraries\7z\7za.exe") `
+        -ArgumentList ("a -bd -bso0 -bse0 ngubs.7z `"" + $Global:Distrib + "\NuGet Bootstrapper\ngubs.exe`"") `
+        -WorkingDirectory ($Global:Root + "\Support\Make SFX archive") `
+        -PassThru | Out-Null
+    
     Console-Update-Status "[OK]" -ForegroundColor Green
 }
 
@@ -368,6 +378,8 @@ Prepare-Directory -Path ($Global:Distrib + "\NuGet Bootstrapper")
 
 ILMerge -Primary "ngu.exe" -Source ($Global:Root + "\NuGetUpdate.Installer\bin\Release") -Target ($Global:Distrib + "\NuGet Update")
 ILMerge -Primary "ngubs.exe" -Source ($Global:Root + "\NuGetUpdate.Bootstrapper\bin\Release") -Target ($Global:Distrib + "\NuGet Bootstrapper")
+
+Compress-Bootstraper
 
 Build-NuGet-Packages
 

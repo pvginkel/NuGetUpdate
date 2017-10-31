@@ -1,3 +1,8 @@
+Function Escape([string]$Value)
+{
+    return $Value.Replace('"', '\"')
+}
+
 if ($Args.Length -ne 4)
 {
     Write-Host "Expected command line:"
@@ -5,30 +10,17 @@ if ($Args.Length -ne 4)
     exit
 }
 
-$WinRar = "C:\Program Files\WinRar\winrar.exe"
+$Header = "header.sfx"
+$Payload = "ngubs.7z"
 
-if (-not (Test-Path $WinRar))
+if (-not (Test-Path $Header))
 {
-    $WinRar = "C:\Program Files (x86)\WinRar\winrar.exe"
-}
-
-if (-not (Test-Path $WinRar))
-{
-    Write-Host "Could not find WinRar"
+    Write-Host "Could not find" $Header
     exit
 }
-
-$Source = "ngubs.exe"
-
-if (-not (Test-Path $Source))
+if (-not (Test-Path $Payload))
 {
-    Write-Host "Could not find ngubs.exe"
-    exit
-}
-
-if (-not (Test-Path "mainicon.ico"))
-{
-    Write-Host "Could not find mainicon.ico"
+    Write-Host "Could not find" $Payload
     exit
 }
 
@@ -42,21 +34,25 @@ if ([System.IO.Path]::GetExtension($Target) -ne ".exe")
     $Target += ".exe"
 }
 
-$Config = "Silent=1`n"
-$Config += "TempMode`n"
-$Config += "Setup=ngubs.exe -s `"$Site`" -p `"$PackageCode`" -t `"$SetupTitle`""
+$Config = @"
+;!@Install@!UTF-8!
+Title="$(Escape($SetupTitle))"
+RunProgram="ngubs.exe -s \"$(Escape($site))\" -p \"$(Escape($PackageCode))\" -t \"$(Escape($SetupTitle))\""
+Progress="no"
+;!@InstallEnd@!
+"@
 
-$ConfigFileName = [System.IO.Path]::GetTempFileName()
-
-[System.IO.File]::WriteAllText($ConfigFileName, $Config, [System.Text.Encoding]::ASCII)
-
-$Target = [System.IO.Path]::GetFullPath($Target)
-
-if (Test-Path $Target)
-{
-    Remove-Item $Target
-}
-
-Start-Process $WinRar "a -sfx `"-z$ConfigFileName`" `"-iiconmainicon.ico`" `"$Target`" `"$Source`"" -Wait
-
-Remove-Item $ConfigFileName
+$Output = [System.IO.File]::Create($Target)
+    
+$Input = [System.IO.File]::OpenRead($Header)
+$Input.CopyTo($Output)
+$Input.Dispose()
+    
+$ConfigBytes = [System.Text.Encoding]::UTF8.GetBytes($Config)
+$Output.Write($ConfigBytes, 0, $ConfigBytes.Length)
+    
+$Input = [System.IO.File]::OpenRead($Payload)
+$Input.CopyTo($Output)
+$Input.Dispose()
+    
+$Output.Dispose()
