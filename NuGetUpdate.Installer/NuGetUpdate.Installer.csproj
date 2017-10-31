@@ -58,15 +58,11 @@
       <DependentUpon>InstallLog-v1.xsd</DependentUpon>
     </Compile>
     <Compile Include="InstallLogging\InstallLogAdditions.cs" />
-    <Compile Include="MainForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="MainForm.cs" />
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainForm.Visitor.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="MainForm.Visitor.cs" />
     <Compile Include="Metadata.cs" />
     <Compile Include="Pages\IControlHostPage.cs" />
     <Compile Include="Pages\FinishPage.cs">
@@ -211,7 +207,6 @@
   <PropertyGroup>
     <PostBuildEvent>$(SolutionDir)\Libraries\InsertIcons\InsertIcons.exe $(TargetPath) $(ProjectDir)uninstall.ico $(SolutionDir)\Support\Key.snk</PostBuildEvent>
   </PropertyGroup>
-  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

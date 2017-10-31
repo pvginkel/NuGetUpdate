@@ -308,7 +308,7 @@ Function Build-NuGet-Package([string]$NuSpec, [string]$Package, [string]$TargetP
     
     # Execute NuGet
     
-    & ($Global:Root + "\.nuget\NuGet.exe") `
+    & ($Global:Root + "\Build\Support\NuGet.exe") `
         pack $NuSpec `
         -OutputDirectory $TargetPath `
         -BasePath ($Global:Root + "\Build") `
