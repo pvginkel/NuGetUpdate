@@ -133,6 +133,13 @@ namespace NuGetUpdate.Shared
             );
 
             if (elements.Count != 1)
+            {
+                elements = document.DocumentElement.GetElementsByTagName(
+                    "version", Constants.NuSpec2Ns
+                );
+            }
+
+            if (elements.Count != 1)
                 return;
 
             PackageCode = elements[0].InnerText;
@@ -156,11 +163,13 @@ namespace NuGetUpdate.Shared
 
         private void PerformDownload(string downloadTarget)
         {
-            var uri = new Uri(_site.TrimEnd('/') + "/package/" + _package);
+            Status = String.Format(UILabels.ConnectingTo, new Uri(_site).Host);
+
+            var uri = ResolvePackageUri();
+            if (uri == null)
+                throw new NuGetUpdateException("Cannot find latest version");
 
             var request = (HttpWebRequest)WebRequest.Create(uri);
-
-            Status = String.Format(UILabels.ConnectingTo, uri.Host);
 
             int totalRead = 0;
 
@@ -199,6 +208,68 @@ namespace NuGetUpdate.Shared
                     );
                 }
             }
+        }
+
+        private string ResolvePackageUri()
+        {
+            string url = String.Format(
+                "{0}/FindPackagesById()?$filter={1}&$orderby=Version%20desc&$top=1&id={2}",
+                _site.TrimEnd('/'),
+                Uri.EscapeDataString("IsLatestVersion eq true and IsPrerelease eq false"),
+                Uri.EscapeDataString("'" + _package + "'")
+            );
+
+            string content;
+
+            using (var client = new WebClient())
+            {
+                content = client.DownloadString(url);
+            }
+
+            var document = new XmlDocument();
+
+            document.LoadXml(content);
+
+            var entry = document.GetElementsByTagName("entry", Constants.AtomNs);
+
+            if (entry.Count == 0)
+                return null;
+
+            var contentElements = ((XmlElement)entry[0]).GetElementsByTagName(
+                "content",
+                Constants.AtomNs
+            );
+
+            XmlElement contentElement = null;
+
+            switch (contentElements.Count)
+            {
+                case 0:
+                    return null;
+                case 1:
+                    contentElement = (XmlElement)contentElements[0];
+                    break;
+                default:
+                    foreach (XmlElement item in contentElements)
+                    {
+                        var typeAttribute = item.Attributes["type"];
+                        if (typeAttribute != null && String.Equals(typeAttribute.Value, "application/zip", StringComparison.OrdinalIgnoreCase))
+                        {
+                            contentElement = item;
+                            break;
+                        }
+                    }
+                    break;
+            }
+
+            if (contentElement == null)
+                return null;
+
+            var attribute = contentElements[0].Attributes["src"];
+            if (attribute != null)
+                return attribute.Value;
+
+            return null;
         }
 
         private string PerformExtract(string packagePath)

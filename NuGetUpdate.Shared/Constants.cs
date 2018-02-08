@@ -17,6 +17,7 @@ namespace NuGetUpdate.Shared
         public const string NuGetUpdateFileName = "ngu.exe";
         public const string ScriptNs = "https://github.com/pvginkel/NuGetUpdate/Script/v1";
         public const string NuSpecNs = "http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd";
+        public const string NuSpec2Ns = "http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd";
         public const string AtomNs = "http://www.w3.org/2005/Atom";
         public const string DataServicesNs = "http://schemas.microsoft.com/ado/2007/08/dataservices";
         public const string BinFolder = "Bin";
