@@ -51,6 +51,7 @@
     <Compile Include="..\NuGetUpdate.Shared\Escaping.cs">
       <Link>Escaping.cs</Link>
     </Compile>
+    <Compile Include="ExceptionEventHandler.cs" />
     <Compile Include="Update.cs" />
     <Compile Include="NuGetUpdateException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -59,6 +60,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>UILabels.resx</DependentUpon>
     </Compile>
+    <Compile Include="Updater.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Support\Key.snk">
