@@ -15,6 +15,8 @@ namespace NuGetUpdate.Installer
         private readonly ArgumentOption<string> _package = new ArgumentOption<string>("Package code", true, "-p");
         private readonly ArgumentOption<string> _title = new ArgumentOption<string>("Setup title", false, "-t");
         private readonly ArgumentOption<string> _site = new ArgumentOption<string>("Site", false, "-s");
+        private readonly ArgumentOption<string> _siteUserName = new ArgumentOption<string>("Site user name", false, "-su");
+        private readonly ArgumentOption<string> _sitePassword = new ArgumentOption<string>("Site password", false, "-sp");
 
         public bool Install
         {
@@ -51,6 +53,16 @@ namespace NuGetUpdate.Installer
             get { return _site.Argument; }
         }
 
+        public string SiteUserName
+        {
+            get { return _siteUserName.Argument; }
+        }
+
+        public string SitePassword
+        {
+            get { return _sitePassword.Argument; }
+        }
+
         public bool Redirected
         {
             get { return _redirected.IsProvided; }
@@ -65,6 +77,8 @@ namespace NuGetUpdate.Installer
             Items.Add(_package);
             Items.Add(_title);
             Items.Add(_site);
+            Items.Add(_siteUserName);
+            Items.Add(_sitePassword);
             Items.Add(_redirected);
         }
 

@@ -16,10 +16,10 @@ namespace NuGetUpdate
             using (var metadata = Metadata.Open(packageCode))
             {
                 string url = String.Format(
-                    "{0}/GetUpdates()?packageIds='{1}'&versions='{2}'&includePrerelease=false&includeAllVersions=false",
+                    "{0}/FindPackagesById()?$filter={1}&$orderby=Version%20desc&$top=1&id={2}",
                     metadata.NuGetSite.TrimEnd('/'),
-                    Uri.EscapeDataString(metadata.PackageCode),
-                    Uri.EscapeDataString(metadata.InstalledVersion)
+                    Uri.EscapeDataString("IsLatestVersion eq true and IsPrerelease eq false"),
+                    Uri.EscapeDataString("'" + metadata.PackageCode + "'")
                 );
 
                 try
@@ -28,6 +28,9 @@ namespace NuGetUpdate
 
                     using (var client = new WebClient())
                     {
+                        if (!String.IsNullOrEmpty(metadata.NuGetSiteUserName))
+                            client.Credentials = new NetworkCredential(metadata.NuGetSiteUserName, metadata.NuGetSitePassword);
+
                         content = client.DownloadString(url);
                     }
 
@@ -40,17 +43,10 @@ namespace NuGetUpdate
                     if (entry.Count == 0)
                         return false;
 
-                    if (metadata.AttemptedVersion != null)
-                    {
-                        if (String.Equals(
-                            metadata.AttemptedVersion,
-                            GetVersionFromEntry((XmlElement)entry[0]),
-                            StringComparison.OrdinalIgnoreCase
-                        ))
-                            return false;
-                    }
+                    string checkVersion = metadata.AttemptedVersion ?? metadata.InstalledVersion;
+                    string availableVersion = GetVersionFromEntry((XmlElement)entry[0]);
 
-                    return true;
+                    return !String.Equals(checkVersion, availableVersion, StringComparison.OrdinalIgnoreCase);
                 }
                 catch (Exception ex)
                 {

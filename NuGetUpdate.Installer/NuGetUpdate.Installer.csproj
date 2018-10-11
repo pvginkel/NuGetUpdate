@@ -49,6 +49,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -58,11 +59,15 @@
       <DependentUpon>InstallLog-v1.xsd</DependentUpon>
     </Compile>
     <Compile Include="InstallLogging\InstallLogAdditions.cs" />
-    <Compile Include="MainForm.cs" />
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainForm.Visitor.cs" />
+    <Compile Include="MainForm.Visitor.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Metadata.cs" />
     <Compile Include="Pages\IControlHostPage.cs" />
     <Compile Include="Pages\FinishPage.cs">

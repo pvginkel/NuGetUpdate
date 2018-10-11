@@ -14,6 +14,8 @@ namespace NuGetUpdate.Shared
     public class PackageDownloader : IDisposable
     {
         private readonly string _site;
+        private readonly string _siteUserName;
+        private readonly string _sitePassword;
         private readonly string _package;
         private Thread _thread;
         private bool _aborted;
@@ -42,7 +44,7 @@ namespace NuGetUpdate.Shared
                 ev(this, e);
         }
 
-        public PackageDownloader(string site, string package)
+        public PackageDownloader(string site, string siteUserName, string sitePassword, string package)
         {
             if (site == null)
                 throw new ArgumentNullException("site");
@@ -50,6 +52,8 @@ namespace NuGetUpdate.Shared
                 throw new ArgumentNullException("package");
 
             _site = site;
+            _siteUserName = siteUserName;
+            _sitePassword = sitePassword;
             _package = package;
         }
 
@@ -171,6 +175,9 @@ namespace NuGetUpdate.Shared
 
             var request = (HttpWebRequest)WebRequest.Create(uri);
 
+            if (!String.IsNullOrEmpty(_siteUserName))
+                request.Credentials = new NetworkCredential(_siteUserName, _sitePassword);
+
             int totalRead = 0;
 
             var stopwatch = new Stopwatch();
@@ -223,6 +230,9 @@ namespace NuGetUpdate.Shared
 
             using (var client = new WebClient())
             {
+                if (!String.IsNullOrEmpty(_siteUserName))
+                    client.Credentials = new NetworkCredential(_siteUserName, _sitePassword);
+
                 content = client.DownloadString(url);
             }
 

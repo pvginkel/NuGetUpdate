@@ -23,7 +23,7 @@ namespace NuGetUpdate.Installer.Pages
 
             using (var metadata = Metadata.Open(Program.Arguments.Package))
             {
-                _downloader = new PackageDownloader(metadata.NuGetSite, Program.Arguments.Package);
+                _downloader = new PackageDownloader(metadata.NuGetSite, metadata.NuGetSiteUserName, metadata.NuGetSitePassword, Program.Arguments.Package);
             }
 
             _downloader.DownloadCompleted += (s, ea) => DownloadComplete(ea.DownloadFolder);

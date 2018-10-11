@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using System.Text;
 using Microsoft.Win32;
 #if !NGU_LIBRARY
@@ -23,6 +24,8 @@ namespace NuGetUpdate.Installer
         private const string InstalledVersionKey = "Installed Version";
         private const string AttemptedVersionKey = "Attempted Version";
         private const string NuGetSiteKey = "NuGet Site";
+        private const string NuGetSiteUserNameKey = "NuGet Site User Name";
+        private const string NuGetSitePasswordKey = "NuGet Site Password";
         private const string InstallPathKey = "Installation Path";
         private const string InstallLogKey = "Installation Log";
         private const string SetupTitleKey = "Setup Title";
@@ -87,6 +90,30 @@ namespace NuGetUpdate.Installer
                     _key.DeleteValue(NuGetSiteKey, false);
                 else
                     _key.SetValue(NuGetSiteKey, value);
+            }
+        }
+
+        public string NuGetSiteUserName
+        {
+            get { return (string)_key.GetValue(NuGetSiteUserNameKey); }
+            set
+            {
+                if (String.IsNullOrEmpty(value))
+                    _key.DeleteValue(NuGetSiteUserNameKey, false);
+                else
+                    _key.SetValue(NuGetSiteUserNameKey, value);
+            }
+        }
+
+        public string NuGetSitePassword
+        {
+            get { return Unprotect((string)_key.GetValue(NuGetSitePasswordKey)); }
+            set
+            {
+                if (String.IsNullOrEmpty(value))
+                    _key.DeleteValue(NuGetSitePasswordKey, false);
+                else
+                    _key.SetValue(NuGetSitePasswordKey, Protect(value));
             }
         }
 
@@ -242,6 +269,24 @@ namespace NuGetUpdate.Installer
             }
         }
 #endif
+
+        private string Protect(string value)
+        {
+            if (value == null)
+                return null;
+
+            var encrypted = ProtectedData.Protect(Encoding.UTF8.GetBytes(value), null, DataProtectionScope.CurrentUser);
+            return Convert.ToBase64String(encrypted);
+        }
+
+        private string Unprotect(string value)
+        {
+            if (value == null)
+                return null;
+
+            var unencrypted = ProtectedData.Unprotect(Convert.FromBase64String(value), null, DataProtectionScope.CurrentUser);
+            return Encoding.UTF8.GetString(unencrypted);
+        }
 
         public void Dispose()
         {

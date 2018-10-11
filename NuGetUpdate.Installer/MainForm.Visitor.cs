@@ -203,6 +203,8 @@ namespace NuGetUpdate.Installer
                     if (Runner.Mode == ScriptRunnerMode.Install)
                     {
                         metadata.NuGetSite = Program.Arguments.Site;
+                        metadata.NuGetSiteUserName = Program.Arguments.SiteUserName;
+                        metadata.NuGetSitePassword = Program.Arguments.SitePassword;
                         metadata.SetupTitle = Runner.Environment.Config.SetupTitle;
                         metadata.InstallPath = Runner.Variables.GetRequired<string>(
                             Constants.ScriptVariables.TargetPath

@@ -42,7 +42,7 @@ namespace NuGetUpdate.Bootstrapper
         {
             NativeMethods.SetForegroundWindow(Handle);
 
-            _downloader = new PackageDownloader(Program.Arguments.Site, Program.Arguments.Package);
+            _downloader = new PackageDownloader(Program.Arguments.Site, Program.Arguments.SiteUserName, Program.Arguments.SitePassword, Program.Arguments.Package);
 
             _downloader.DownloadCompleted += (s, ea) => DownloadComplete(ea.DownloadFolder);
             _downloader.DownloadFailed += (s, ea) => ShowException(ea.Exception);
@@ -81,10 +81,12 @@ namespace NuGetUpdate.Bootstrapper
                 {
                     FileName = nguPath,
                     Arguments = String.Format(
-                        "-i -p {0} -t {1} -s {2} -- {3}",
+                        "-i -p {0} -t {1} -s {2} -su {3} -sp {4} -- {5}",
                         Escaping.ShellEncode(Program.Arguments.Package),
                         Escaping.ShellEncode(Program.Arguments.Title),
                         Escaping.ShellEncode(Program.Arguments.Site),
+                        Escaping.ShellEncode(Program.Arguments.SiteUserName),
+                        Escaping.ShellEncode(Program.Arguments.SitePassword),
                         Escaping.ShellEncode(Program.ExtraArguments)
                     ),
                     UseShellExecute = false,
