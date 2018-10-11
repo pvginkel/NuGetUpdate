@@ -199,9 +199,12 @@ namespace NuGetUpdate.Installer
                     {
                         Items = _form._visitor.InstallLog.ToArray()
                     };
-                    metadata.NuGetSite = Program.Arguments.Site;
-                    metadata.NuGetSiteUserName = Program.Arguments.SiteUserName;
-                    metadata.NuGetSitePassword = Program.Arguments.SitePassword;
+                    if (!String.IsNullOrEmpty(Program.Arguments.Site))
+                    {
+                        metadata.NuGetSite = Program.Arguments.Site;
+                        metadata.NuGetSiteUserName = Program.Arguments.SiteUserName;
+                        metadata.NuGetSitePassword = Program.Arguments.SitePassword;
+                    }
                     metadata.SetupTitle = Runner.Environment.Config.SetupTitle;
                     metadata.InstallPath = Runner.Variables.GetRequired<string>(
                         Constants.ScriptVariables.TargetPath
