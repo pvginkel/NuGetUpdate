@@ -77,18 +77,34 @@ namespace NuGetUpdate.Bootstrapper
 
                 NativeMethods.AllowSetForegroundWindow(NativeMethods.ASFW_ANY);
 
+                var arguments = new List<string>
+                {
+                    "-i",
+                    "-p",
+                    Program.Arguments.Package,
+                    "-t",
+                    Program.Arguments.Title,
+                    "-s",
+                    Program.Arguments.Site
+                };
+
+                if (!String.IsNullOrEmpty(Program.Arguments.SiteUserName))
+                {
+                    arguments.Add("-su");
+                    arguments.Add(Program.Arguments.SiteUserName);
+                }
+                if (!String.IsNullOrEmpty(Program.Arguments.SitePassword))
+                {
+                    arguments.Add("-sp");
+                    arguments.Add(Program.Arguments.SitePassword);
+                }
+                arguments.Add("--");
+                arguments.AddRange(Program.ExtraArguments);
+
                 using (var process = Process.Start(new ProcessStartInfo
                 {
                     FileName = nguPath,
-                    Arguments = String.Format(
-                        "-i -p {0} -t {1} -s {2} -su {3} -sp {4} -- {5}",
-                        Escaping.ShellEncode(Program.Arguments.Package),
-                        Escaping.ShellEncode(Program.Arguments.Title),
-                        Escaping.ShellEncode(Program.Arguments.Site),
-                        Escaping.ShellEncode(Program.Arguments.SiteUserName),
-                        Escaping.ShellEncode(Program.Arguments.SitePassword),
-                        Escaping.ShellEncode(Program.ExtraArguments)
-                    ),
+                    Arguments = Escaping.ShellEncode(arguments.ToArray()),
                     UseShellExecute = false,
                     WorkingDirectory = downloadFolder
                 }))

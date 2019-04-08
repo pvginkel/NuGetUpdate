@@ -49,7 +49,7 @@ namespace NuGetUpdate.Shared
         public static string ShellEncode(string arg)
         {
             if (String.IsNullOrEmpty(arg))
-                return "";
+                return "\"\"";
 
             return "\"" + arg.Replace("\"", "\"\"") + "\"";
         }
