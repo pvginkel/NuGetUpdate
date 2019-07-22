@@ -40,38 +40,7 @@ Function Prepare-Directory([string]$Path)
 {
     if (Test-Path -Path $Path)
     {
-        Remove-Item -Recurse -Force $Path -ErrorAction SilentlyContinue
-        
-        if (Test-Path -Path $Path)
-        {
-            Write-Host "  Killing MSBuild..."
-            
-            # Lets see whether there is an MSBuild that is keeping hold of
-            # our build tasks DLL.
-            
-            Stop-Process -ProcessName MSBuild -ErrorAction SilentlyContinue
-            Stop-Process -ProcessName MSBuildTaskHost -ErrorAction SilentlyContinue
-            
-            # Second attempt. We need to give MSBuild time to shut down.
-            
-            for ($i = 0; $i -lt 5; $i++)
-            {
-                Remove-Item -Recurse -Force $Path -ErrorAction SilentlyContinue
-                
-                if (-not (Test-Path -Path $Path))
-                {
-                    break
-                }
-                
-                Start-Sleep -m 400
-            }
-            
-            if (Test-Path -Path $Path)
-            {
-                Console-Update-Status "[FAILED]" -ForegroundColor Red
-                Exit 3
-            }
-        }
+        Remove-Item -Recurse -Force $Path
     }
 
     [void](New-Item -Type directory $Path)
@@ -134,66 +103,6 @@ Function Build-Solution([string]$Solution, [string]$Target = $Null, [string]$Con
             Exit 2
         }
     }
-}
-
-Function Find-MSBuild
-{
-    $MsBuild = $Null
-    
-    $FrameworkRegistryRoot = "HKLM:\Software\Wow6432Node\Microsoft\.NETFramework"
-    
-    if ((Test-Path $FrameworkRegistryRoot) -ne $True)
-    {
-        $FrameworkRegistryRoot = "HKLM:\Software\Microsoft\.NETFramework"
-        
-        if ((Test-Path $FrameworkRegistryRoot) -ne $True)
-        {
-            $FrameworkRegistryRoot = $Null
-        }
-    }
-    
-    if ($FrameworkRegistryRoot -ne $Null)
-    {
-        $FrameworkInstallRoot = (Get-ItemProperty $FrameworkRegistryRoot).InstallRoot
-        
-        if ($FrameworkInstallRoot -ne $Null)
-        {
-            $FrameworkVersionRoot = $FrameworkInstallRoot + "\v4.0.30319"
-            
-            if (Test-Path $FrameworkVersionRoot)
-            {
-                $MsBuildPath = $FrameworkVersionRoot + "\MSBuild.exe"
-                
-                if (Test-Path $MsBuildPath)
-                {
-                    $MsBuild = $MsBuildPath
-                }
-                else
-                {
-                    Write-Host `
-                       ("MSBuild.exe could not be found in the .NET Framework " + `
-                        "installation folder. Ensure the .NET Framework version 4.0 " + `
-                        "is installed correctly and retry the build.") `
-                        -ForegroundColor Red
-                    
-                    Exit 3
-                }
-            }
-        }
-    }
-    
-    if ($MsBuild -eq $Null)
-    {
-        Write-Host `
-           ("Microsoft .NET framework not found; please install from " + `
-            "http://www.microsoft.com/net/download. " + `
-            "The build process cannot continue.") `
-            -ForegroundColor Red
-        
-        Exit 3
-    }
-    
-    Return $MsBuild
 }
 
 Function Get-Template([string]$Key)
@@ -364,7 +273,7 @@ Function Compress-Bootstraper
 
 $Global:Root = (Get-Item (Get-Script-Directory)).Parent.Parent.FullName
 $Global:DefaultBuildTarget = "Build"
-$Global:MSBuild = Find-MSBuild
+$Global:MSBuild = "msbuild"
 $Global:Distrib = $Global:Root + "\Build\Distrib"
 
 AssemblyInfo-Write-All
