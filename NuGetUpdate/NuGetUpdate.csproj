@@ -73,6 +73,12 @@
       <LastGenOutput>UILabels.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NuGetUpdate.Installer\NuGetUpdate.Installer.csproj">
+      <Project>{08ae98d9-733e-4de7-a1ec-7849ad2c2a03}</Project>
+      <Name>NuGetUpdate.Installer</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
