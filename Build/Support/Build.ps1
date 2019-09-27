@@ -175,7 +175,7 @@ Function ILMerge([string]$Primary, [string]$Source, [string]$Target)
     $Arguments = `
         "`"/out:" + $Target + "\" + $Primary + "`" " + `
         "`"/keyfile=" + $Global:Root + "\Support\Key.snk`" " + `
-        "/v2 /ndebug " + `
+        "/v2 /ndebug /internalize " + `
         $Primary + " " + `
         $Libraries
     
