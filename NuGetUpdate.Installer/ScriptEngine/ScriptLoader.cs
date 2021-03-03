@@ -84,7 +84,7 @@ namespace NuGetUpdate.Installer.ScriptEngine
 
             document.Load(files[0]);
 
-            if (Constants.TryGetDetails(document, out string packageCode, out string version))
+            if (!Constants.TryGetDetails(document, out string packageCode, out string version))
                 throw new ScriptException(UILabels.InvalidPackage);
 
             return new ScriptConfig(
