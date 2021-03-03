@@ -84,13 +84,7 @@ namespace NuGetUpdate.Installer.ScriptEngine
 
             document.Load(files[0]);
 
-            string packageCode;
-            string version;
-
-            if (
-                !TryGetDetails(document, Constants.NuSpecNs, out packageCode, out version) &&
-                !TryGetDetails(document, Constants.NuSpec2Ns, out packageCode, out version)
-            )
+            if (Constants.TryGetDetails(document, out string packageCode, out string version))
                 throw new ScriptException(UILabels.InvalidPackage);
 
             return new ScriptConfig(
@@ -101,32 +95,6 @@ namespace NuGetUpdate.Installer.ScriptEngine
                 installedVersion,
                 restartArguments
             );
-        }
-
-        private static bool TryGetDetails(XmlDocument document, string ns, out string id, out string version)
-        {
-            id = null;
-            version = null;
-
-            var elements = document.DocumentElement.GetElementsByTagName(
-                "version", ns
-            );
-
-            if (elements.Count == 0)
-                return false;
-
-            version = elements[0].InnerText;
-
-            elements = document.DocumentElement.GetElementsByTagName(
-                "id", ns
-            );
-
-            if (elements.Count == 0)
-                return false;
-
-            id = elements[0].InnerText;
-
-            return true;
         }
     }
 }

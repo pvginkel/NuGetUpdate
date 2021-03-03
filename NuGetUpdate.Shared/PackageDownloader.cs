@@ -132,21 +132,10 @@ namespace NuGetUpdate.Shared
 
             document.Load(files[0]);
 
-            var elements = document.DocumentElement.GetElementsByTagName(
-                "version", Constants.NuSpecNs
-            );
-
-            if (elements.Count != 1)
-            {
-                elements = document.DocumentElement.GetElementsByTagName(
-                    "version", Constants.NuSpec2Ns
-                );
-            }
-
-            if (elements.Count != 1)
+            if (!Constants.TryGetDetails(document, out string packageCode, out _))
                 return;
 
-            PackageCode = elements[0].InnerText;
+            PackageCode = packageCode;
         }
 
         private string FindPackageFile()
