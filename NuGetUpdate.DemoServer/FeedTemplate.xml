@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:georss="http://www.georss.org/georss" xmlns:gml="http://www.opengis.net/gml" xml:base=" https://setups.amcsgroup.io/NuGet">
+  <id>http://schemas.datacontract.org/2004/07/</id>
+  <title/>
+  <updated>2022-07-08T17:48:26Z</updated>
+  <link rel="self" href=" https://setups.amcsgroup.io/NuGet/Packages"/>
+  <entry>
+    <id> https://setups.amcsgroup.io/NuGet/Packages(Id='AMCS.JobSystem.RestClient-1.9',Version='1.9.183')</id>
+    <category term="Microsoft.VisualStudio.Services.NuGet.Server.Controllers.V2.ServerV2FeedPackage" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme"/>
+    <link rel="edit" href=" https://setups.amcsgroup.io/NuGet/Packages(Id='AMCS.JobSystem.RestClient-1.9',Version='1.9.183')"/>
+    <link rel="self" href=" https://setups.amcsgroup.io/NuGet/Packages(Id='AMCS.JobSystem.RestClient-1.9',Version='1.9.183')"/>
+    <title type="text">AMCS.JobSystem.RestClient-1.9</title>
+    <updated>2022-02-25T16:03:59Z</updated>
+    <author>
+      <name>AMCS</name>
+    </author>
+    <content type="application/zip" src="{TARGET}"/>
+    <m:properties>
+      <d:Id>{ID}</d:Id>
+      <d:Version>{VERSION}</d:Version>
+      <d:NormalizedVersion>1.9.183</d:NormalizedVersion>
+      <d:Authors>AMCS</d:Authors>
+      <d:Copyright m:null="true"/>
+      <d:Created m:type="Edm.DateTime">2022-02-25T16:03:59Z</d:Created>
+      <d:Dependencies m:null="true"/>
+      <d:Description>Application to manage the AMCS Job System through the ELEMOS REST API's.</d:Description>
+      <d:DownloadCount m:type="Edm.Int32">0</d:DownloadCount>
+      <d:IconUrl/>
+      <d:IsLatestVersion m:type="Edm.Boolean">true</d:IsLatestVersion>
+      <d:IsAbsoluteLatestVersion m:type="Edm.Boolean">true</d:IsAbsoluteLatestVersion>
+      <d:IsPrerelease m:type="Edm.Boolean">false</d:IsPrerelease>
+      <d:Language m:null="true"/>
+      <d:LastUpdated m:type="Edm.DateTime">2022-02-25T16:03:59Z</d:LastUpdated>
+      <d:Published m:type="Edm.DateTime">2022-02-25T16:03:59Z</d:Published>
+      <d:PackageSize m:type="Edm.Int64">2932403</d:PackageSize>
+      <d:ProjectUrl m:null="true"/>
+      <d:ReleaseNotes m:null="true"/>
+      <d:RequireLicenseAcceptance m:type="Edm.Boolean">false</d:RequireLicenseAcceptance>
+      <d:Summary m:null="true"/>
+      <d:Tags m:null="true"/>
+      <d:Title m:null="true"/>
+      <d:MinClientVersion m:null="true"/>
+      <d:LastEdited m:type="Edm.DateTime">2022-02-25T16:03:59Z</d:LastEdited>
+      <d:LicenseUrl/>
+      <d:Listed m:type="Edm.Boolean">true</d:Listed>
+    </m:properties>
+  </entry>
+</feed>

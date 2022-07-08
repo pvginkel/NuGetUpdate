@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Net;
 using System.Windows.Forms;
 using Microsoft.Win32;
 using NuGetUpdate.Shared;
@@ -19,6 +20,8 @@ namespace NuGetUpdate.Installer
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12;
 
             try
             {

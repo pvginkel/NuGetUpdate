@@ -233,13 +233,25 @@ Function Build-NuGet-Package([string]$NuSpec, [string]$Package, [string]$TargetP
 
 Function Create-Bootstrapper
 {
+    Prepare-Directory -Path ($Global:Distrib + "\Demo")
+    
     Write-Host "Creating demo setup"
+    
+    Create-Bootstrapper-For-Url -Url "http://nuget.org/api/v2" -Out "Setup.exe"
+        
+    Console-Update-Status "[OK]" -ForegroundColor Green
+    
+    Write-Host "Creating demo setup for demo server"
+    
+    Create-Bootstrapper-For-Url -Url "http://localhost:5166/" -Out "LocalSetup.exe"
+    
+    Console-Update-Status "[OK]" -ForegroundColor Green
 
-    $Target = $Global:Distrib + "\Demo"
-    
-    Prepare-Directory -Path $Target
-    
-    $Arguments = "`"" + $Target + "\Setup.exe`" http://nuget.org/api/v2 NuGetUpdate.Demo `"NuGet Update Demo`""
+}
+
+Function Create-Bootstrapper-For-Url([string]$Url, [string]$Out)
+{
+    $Arguments = "`"" + $Global:Distrib + "\Demo\" + $Out + "`" " + $Url + " NuGetUpdate.Demo `"NuGet Update Demo`""
     
     Start-Process `
         -NoNewWindow `
@@ -248,8 +260,6 @@ Function Create-Bootstrapper
         -ArgumentList ("-file `"" + $Global:Root + "\Support\Make SFX archive\MakeSetup.ps1`" " + $Arguments) `
         -WorkingDirectory ($Global:Root + "\Support\Make SFX archive") `
         -PassThru | Out-Null
-        
-    Console-Update-Status "[OK]" -ForegroundColor Green
 }
 
 Function Compress-Bootstraper

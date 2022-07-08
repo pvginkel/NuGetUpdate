@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Windows.Forms;
 
 namespace NuGetUpdate.Demo
@@ -14,6 +15,9 @@ namespace NuGetUpdate.Demo
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12;
+
             Application.Run(new MainForm());
         }
     }

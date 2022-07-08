@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Windows.Forms;
 
 namespace NuGetUpdate.Bootstrapper
@@ -14,6 +15,8 @@ namespace NuGetUpdate.Bootstrapper
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12;
 
             try
             {

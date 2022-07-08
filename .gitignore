@@ -1,5 +1,7 @@
-/*.suo
-/*.user
+/*/bin
+/*/obj
+*.suo
+*.user
 Thumbs.db
 /*.docstates
 /*.shfbproj_*
