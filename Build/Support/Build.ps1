@@ -175,7 +175,7 @@ Function ILMerge([string]$Primary, [string]$Source, [string]$Target)
     $Arguments = `
         "`"/out:" + $Target + "\" + $Primary + "`" " + `
         "`"/keyfile=" + $Global:Root + "\Support\Key.snk`" " + `
-        "/v2 /ndebug /internalize " + `
+        "/v4 /ndebug /internalize " + `
         $Primary + " " + `
         $Libraries
     
@@ -273,7 +273,7 @@ Function Compress-Bootstraper
 
 $Global:Root = (Get-Item (Get-Script-Directory)).Parent.Parent.FullName
 $Global:DefaultBuildTarget = "Build"
-$Global:MSBuild = "msbuild"
+$Global:MSBuild = (Invoke-Expression -Command ($Global:Root + '\Build\Support\Resolve-MSBuild.ps1'))
 $Global:Distrib = $Global:Root + "\Build\Distrib"
 
 AssemblyInfo-Write-All
