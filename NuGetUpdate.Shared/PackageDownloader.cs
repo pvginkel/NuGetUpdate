@@ -273,7 +273,7 @@ namespace NuGetUpdate.Shared
 
         private string PerformExtract(string packagePath)
         {
-            string downloadFolder = CreateDownloadFolder();
+            string downloadFolder = Util.CreateTempFolder();
 
             var extractNameTransform = (INameTransform)new WindowsNameTransform(downloadFolder);
 
@@ -337,24 +337,6 @@ namespace NuGetUpdate.Shared
             using (FileStream fileStream = File.Create(targetName))
             {
                 StreamUtils.Copy(zipFile.GetInputStream(entry), fileStream, _buffer);
-            }
-        }
-
-        private string CreateDownloadFolder()
-        {
-            for (int i = 1; ; i++)
-            {
-                string downloadFolder = Path.Combine(
-                    Path.GetTempPath(),
-                    "ngu~" + i
-                );
-
-                if (Directory.Exists(downloadFolder))
-                    continue;
-
-                Directory.CreateDirectory(downloadFolder);
-
-                return downloadFolder;
             }
         }
 

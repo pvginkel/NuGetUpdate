@@ -60,7 +60,6 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="LinkDisplayMode.cs" />
-    <Compile Include="NativeWindowWrapper.cs" />
     <Compile Include="NuGetUpdateException.cs" />
     <Compile Include="DownloadFailedEventHandler.cs" />
     <Compile Include="Escaping.cs" />

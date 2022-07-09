@@ -82,6 +82,7 @@ namespace NuGetUpdate.Installer.ScriptEngine
                     case ScriptRunnerMode.Install: container = _script.Install; break;
                     case ScriptRunnerMode.Uninstall: container = _script.Uninstall; break;
                     case ScriptRunnerMode.Update: container = _script.Update; break;
+                    case ScriptRunnerMode.SilentUpdate: container = _script.SilentUpdate; break;
 
                     default:
                         Debug.Fail("Unexpected mode");

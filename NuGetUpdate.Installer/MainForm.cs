@@ -139,7 +139,7 @@ namespace NuGetUpdate.Installer
                 );
             }
 
-            var environment = new ScriptEnvironment(this, config);
+            var environment = new ScriptEnvironment(config);
 
             _visitor = new Visitor(this);
 

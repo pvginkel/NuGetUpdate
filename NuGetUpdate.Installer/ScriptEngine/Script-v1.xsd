@@ -33,6 +33,14 @@
           </xs:complexType>
         </xs:element>
 
+        <xs:element name="SilentUpdate">
+          <xs:complexType>
+            <xs:complexContent>
+              <xs:extension base="tns:ContainerType" />
+            </xs:complexContent>
+          </xs:complexType>
+        </xs:element>
+
         <xs:element name="Uninstall">
           <xs:complexType>
             <xs:complexContent>

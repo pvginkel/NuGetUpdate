@@ -93,15 +93,15 @@ namespace NuGetUpdate.Shared
                 throw new NuGetUpdateException(UILabels.InvalidPackage);
         }
 
-        public static string ExpandFolderPath(IWin32Window owner, string path)
+        public static string ExpandFolderPath(string path)
         {
             if (path == null)
                 throw new ArgumentNullException("path");
 
-            return _folderPathRe.Replace(path, m => PerformReplace(owner, m));
+            return _folderPathRe.Replace(path, PerformReplace);
         }
 
-        private static string PerformReplace(IWin32Window owner, Match match)
+        private static string PerformReplace(Match match)
         {
             int csidl;
 
@@ -111,7 +111,7 @@ namespace NuGetUpdate.Shared
             var sb = new StringBuilder(300);
 
             int result = NativeMethods.SHGetFolderPath(
-                owner.Handle,
+                IntPtr.Zero,
                 csidl,
                 IntPtr.Zero,
                 0,
@@ -153,6 +153,24 @@ namespace NuGetUpdate.Shared
             else
             {
                 return String.Format(UILabels.SizeBytes, value);
+            }
+        }
+
+        public static string CreateTempFolder()
+        {
+            for (int i = 1; ; i++)
+            {
+                string downloadFolder = Path.Combine(
+                    Path.GetTempPath(),
+                    "ngu~" + i
+                );
+
+                if (Directory.Exists(downloadFolder))
+                    continue;
+
+                Directory.CreateDirectory(downloadFolder);
+
+                return downloadFolder;
             }
         }
     }

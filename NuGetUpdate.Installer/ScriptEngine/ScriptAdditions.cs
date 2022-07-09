@@ -255,15 +255,23 @@ namespace NuGetUpdate.Installer.ScriptEngine
         {
             visitor.ScriptUninstall(this);
         }
-	}
+    }
 
     partial class ScriptUpdate
-	{
+    {
         public override void Visit(IScriptVisitor visitor)
         {
             visitor.ScriptUpdate(this);
         }
-	}
+    }
+
+    partial class ScriptSilentUpdate
+    {
+        public override void Visit(IScriptVisitor visitor)
+        {
+            visitor.ScriptSilentUpdate(this);
+        }
+    }
 
     partial class UninstallPackage : IScriptAction
 	{
@@ -307,6 +315,7 @@ namespace NuGetUpdate.Installer.ScriptEngine
 		void ScriptSetup(ScriptSetup action);
 		void ScriptUninstall(ScriptUninstall action);
 		void ScriptUpdate(ScriptUpdate action);
+		void ScriptSilentUpdate(ScriptSilentUpdate action);
 		void UninstallPackage(UninstallPackage action);
     }
 
@@ -455,6 +464,11 @@ namespace NuGetUpdate.Installer.ScriptEngine
         }
 
         public virtual void ScriptUpdate(ScriptUpdate action)
+        {
+            VisitChildren(action);
+        }
+
+        public virtual void ScriptSilentUpdate(ScriptSilentUpdate action)
         {
             VisitChildren(action);
         }

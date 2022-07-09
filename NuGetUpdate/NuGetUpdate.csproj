@@ -63,6 +63,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>UILabels.resx</DependentUpon>
     </Compile>
+    <Compile Include="UpdateMode.cs" />
     <Compile Include="Updater.cs" />
   </ItemGroup>
   <ItemGroup>

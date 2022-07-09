@@ -8,16 +8,12 @@ namespace NuGetUpdate.Installer.ScriptEngine
 {
     public class ScriptEnvironment
     {
-        private readonly IWin32Window _owner;
-
         public ScriptConfig Config { get; private set; }
 
-        public ScriptEnvironment(IWin32Window owner, ScriptConfig config)
+        public ScriptEnvironment(ScriptConfig config)
         {
             if (config == null)
                 throw new ArgumentNullException("config");
-
-            _owner = new NativeWindowWrapper(owner);
 
             Config = config;
         }
@@ -27,7 +23,7 @@ namespace NuGetUpdate.Installer.ScriptEngine
             if (path == null)
                 throw new ArgumentNullException("path");
 
-            return Util.ExpandFolderPath(_owner, path);
+            return Util.ExpandFolderPath(path);
         }
     }
 }

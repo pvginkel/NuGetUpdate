@@ -14,7 +14,7 @@ app.MapGet("/FindPackagesById()", async context =>
 
     string template;
 
-    using (var stream = typeof(Program).Assembly.GetManifestResourceStream("NuGetUpdate.DemoServer.FeedTemplate.xml"))
+    using (var stream = typeof(Program).Assembly.GetManifestResourceStream("NuGetUpdate.DemoServer.FeedTemplate.xml")!)
     using (var reader = new StreamReader(stream))
     {
         template = reader.ReadToEnd();

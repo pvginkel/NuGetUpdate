@@ -74,6 +74,14 @@
     </Page.Update.Finish>
     
   </Update>
+  <SilentUpdate>
+
+    <!-- Install the contents of the NuGet package into the target folder -->
+    <InstallPackage />
+
+    <Call Name="StartDemo" />
+
+  </SilentUpdate>
   <Uninstall>
     
     <Page.Uninstall.Welcome />

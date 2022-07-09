@@ -49,6 +49,8 @@ namespace NuGetUpdate.Installer
                     !Arguments.Redirected
                 )
                     Redirect();
+                else if (Arguments.Silent)
+                    RunSilently();
                 else
                     Application.Run(new MainForm());
             }
@@ -70,12 +72,9 @@ namespace NuGetUpdate.Installer
             // Copy the executable to the temp directory.
 
             string target = Path.Combine(
-                Path.GetTempPath(),
+                Util.CreateTempFolder(),
                 Path.GetFileName(typeof(Program).Assembly.Location)
             );
-
-            if (File.Exists(target))
-                File.Delete(target);
 
             File.Copy(typeof(Program).Assembly.Location, target);
 
@@ -87,6 +86,9 @@ namespace NuGetUpdate.Installer
                 flag = "-du";
             else
                 throw new NuGetUpdateException(UILabels.ShouldNotRestart);
+
+            if (Program.Arguments.Silent)
+                flag += " -l";
 
             NativeMethods.AllowSetForegroundWindow(NativeMethods.ASFW_ANY);
 
@@ -100,11 +102,16 @@ namespace NuGetUpdate.Installer
                     Escaping.ShellEncode(Program.ExtraArguments)
                 ),
                 UseShellExecute = false,
-                WorkingDirectory = Path.GetTempPath()
+                WorkingDirectory = Path.GetDirectoryName(target)
             }))
             {
                 // We do not wait for the process to finish.
             }
+        }
+
+        private static void RunSilently()
+        {
+            new SilentScriptRunner().Run();
         }
     }
 }

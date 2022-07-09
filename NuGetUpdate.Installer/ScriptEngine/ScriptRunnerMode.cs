@@ -8,6 +8,7 @@ namespace NuGetUpdate.Installer.ScriptEngine
     {
         Install,
         Uninstall,
-        Update
+        Update,
+        SilentUpdate
     }
 }

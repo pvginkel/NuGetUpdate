@@ -70,6 +70,11 @@ namespace NuGetUpdate
 
         public static void StartUpdate(string packageCode, params string[] restartArguments)
         {
+            StartUpdate(packageCode, UpdateMode.Normal, restartArguments);
+        }
+
+        public static void StartUpdate(string packageCode, UpdateMode mode, params string[] restartArguments)
+        {
             if (restartArguments == null)
                 restartArguments = new string[0];
 
@@ -93,12 +98,17 @@ namespace NuGetUpdate
 
                 AllowSetForegroundWindow(ASFW_ANY);
 
+                string extra = null;
+                if (mode == UpdateMode.Silent)
+                    extra = "-l";
+
                 using (Process.Start(new ProcessStartInfo
                 {
                     FileName = nguPath,
                     Arguments = String.Format(
-                        "-du -p {0} -- {1}",
+                        "-du -p {0} {1} -- {2}",
                         Escaping.ShellEncode(packageCode),
+                        extra,
                         Escaping.ShellEncode(restartArguments)
                     ),
                     UseShellExecute = false,

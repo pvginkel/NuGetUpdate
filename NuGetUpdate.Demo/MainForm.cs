@@ -63,6 +63,13 @@ namespace NuGetUpdate.Demo
             Close();
         }
 
+        private void _startUpdateSilently_Click(object sender, EventArgs e)
+        {
+            NuGetUpdate.Update.StartUpdate(Constants.PackageCode, UpdateMode.Silent, "-updated", "-silent");
+
+            Close();
+        }
+
         private void MainForm_Shown(object sender, EventArgs e)
         {
             if (((IList<string>)Environment.GetCommandLineArgs()).Contains("-updated"))

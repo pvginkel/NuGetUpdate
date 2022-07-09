@@ -135,6 +135,7 @@
     <Compile Include="ScriptEngine\ScriptEnvironment.cs" />
     <Compile Include="ScriptEngine\ScriptException.cs" />
     <Compile Include="ScriptEngine\ScriptExceptionEventHandler.cs" />
+    <Compile Include="ScriptEngine\ScriptExecutionVisitor.cs" />
     <Compile Include="ScriptEngine\ScriptLoader.cs" />
     <Compile Include="ScriptEngine\ScriptRunner.cs" />
     <Compile Include="ScriptEngine\ScriptRunnerMode.cs" />
@@ -144,6 +145,8 @@
     <Compile Include="ScriptEngine\ScriptValidator.cs" />
     <Compile Include="ScriptEngine\ScriptValidatorMode.cs" />
     <Compile Include="ScriptEngine\VariableCollection.cs" />
+    <Compile Include="SilentScriptRunner.cs" />
+    <Compile Include="SilentScriptRunner.Visitor.cs" />
     <Compile Include="TextUtil.cs" />
     <Compile Include="UILabels.Designer.cs">
       <AutoGen>True</AutoGen>

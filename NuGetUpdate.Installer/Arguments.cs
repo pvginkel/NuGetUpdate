@@ -12,6 +12,7 @@ namespace NuGetUpdate.Installer
         private readonly ArgumentFlag _update = new ArgumentFlag("Update", "-u");
         private readonly ArgumentFlag _downloadUpdate = new ArgumentFlag("Download update", "-du");
         private readonly ArgumentFlag _redirected = new ArgumentFlag("Redirected", "-x");
+        private readonly ArgumentFlag _silent = new ArgumentFlag("Silent", "-l");
         private readonly ArgumentOption<string> _package = new ArgumentOption<string>("Package code", true, "-p");
         private readonly ArgumentOption<string> _title = new ArgumentOption<string>("Setup title", false, "-t");
         private readonly ArgumentOption<string> _site = new ArgumentOption<string>("Site", false, "-s");
@@ -68,6 +69,11 @@ namespace NuGetUpdate.Installer
             get { return _redirected.IsProvided; }
         }
 
+        public bool Silent
+        {
+            get { return _silent.IsProvided; }
+        }
+
         public Arguments()
         {
             Items.Add(_install);
@@ -80,6 +86,7 @@ namespace NuGetUpdate.Installer
             Items.Add(_siteUserName);
             Items.Add(_sitePassword);
             Items.Add(_redirected);
+            Items.Add(_silent);
         }
 
         public override void Parse(string[] args)
