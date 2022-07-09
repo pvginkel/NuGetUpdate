@@ -8,8 +8,8 @@
     <projectUrl>http://github.com/pvginkel/NuGetUpdate</projectUrl>
   </metadata>
   <files>
-    <file src="..\NuGetUpdate\bin\Release\NuGetUpdate.dll" target="Lib\Net20" />
-    <file src="Distrib\NuGet Update\ngu.exe" target="Lib\Net20" />
+    <file src="..\NuGetUpdate\bin\Release\NuGetUpdate.dll" target="Lib\Net452" />
+    <file src="Distrib\NuGet Update\ngu.exe" target="Lib\Net452" />
     <file src="Distrib\NuGet Bootstrapper\ngubs.exe" target="Tools\Bootstrapper" />
     <file src="..\Support\Make SFX archive\*" target="Tools\Bootstrapper" exclude="..\Support\Make SFX archive\.gitignore;..\Support\Make SFX archive\*.exe" />
     <file src="Distrib\NuGet Update\ngu.exe" target="Tools\Installer" />
