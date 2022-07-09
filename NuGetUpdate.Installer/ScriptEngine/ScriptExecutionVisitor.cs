@@ -116,7 +116,7 @@ namespace NuGetUpdate.Installer.ScriptEngine
             CommitInstallation();
         }
 
-        private void CommitInstallation()
+        public void CommitInstallation()
         {
             // We commit the installation at this point. Things may still
             // happen, but they won't be recorded in the metadata.

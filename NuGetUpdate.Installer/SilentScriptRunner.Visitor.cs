@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,10 +13,14 @@ namespace NuGetUpdate.Installer
     {
         private class Visitor : ScriptExecutionVisitor
         {
+            private readonly TextWriter _logger;
+
             public override ScriptRunner Runner { get; }
 
-            public Visitor(ScriptEnvironment environment, ScriptRunnerMode mode, string scriptFileName)
+            public Visitor(ScriptEnvironment environment, ScriptRunnerMode mode, string scriptFileName, TextWriter logger)
             {
+                _logger = logger;
+
                 Runner = new ScriptRunner(environment, this, mode, scriptFileName);
             }
 
@@ -32,6 +37,8 @@ namespace NuGetUpdate.Installer
 
             protected override void RaiseProgressChanged(string message, double? progress)
             {
+                _logger.WriteLine(message);
+
                 if (progress.HasValue)
                     Trace.WriteLine($"Progress '{message}' {(int)(progress * 100)}%");
                 else
