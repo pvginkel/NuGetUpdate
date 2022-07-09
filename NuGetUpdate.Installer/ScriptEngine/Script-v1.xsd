@@ -33,7 +33,7 @@
           </xs:complexType>
         </xs:element>
 
-        <xs:element name="SilentUpdate">
+        <xs:element name="SilentUpdate" minOccurs="0">
           <xs:complexType>
             <xs:complexContent>
               <xs:extension base="tns:ContainerType" />
